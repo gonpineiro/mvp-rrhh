@@ -69,6 +69,18 @@ class UserController extends Controller
       return redirect('/users/');
     }
 
+    public function showSupusers(Request $request){
+      $user = User::all();
+      $role = Role::all();
+      $ver = "agregar";
+      return view('administracion.users.supervisores', [
+        'users' => $user,
+        'roles' => $role,
+        'ver' => $ver,
+      ]);
+
+    }
+
   private function findByIdUser($id){
       return User::where('id', $id)->firstOrFail();
   }
