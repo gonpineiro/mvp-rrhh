@@ -76,20 +76,14 @@ class UserController extends Controller
       $ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=C:\SAB5\Database\gsm.dbc;Exclusive=No";
       $user = "";
       $pwd = "";
-      $supervisores = "SELECT supe_codi, supe_nomb FROM supervisor WHERE supe_esta <= 1";
+      $query_supervisores = "SELECT supe_codi, supe_nomb FROM supervisor WHERE supe_esta <= 1";
       //dd($supervisores);
 
       if( !($conID = odbc_connect($ODBCdriver,$user,$pwd)) ){ print("No se pudo establecer la conexión!");exit();}
-      if (($result = @odbc_exec($conID, $supervisores)) === false) die("Error en query: " . odbc_errormsg($conID));
+      if (($supervisores = @odbc_exec($conID, $query_supervisores)) === false) die("Error en query: " . odbc_errormsg($conID));
 
-      $user = User::all();
-      $role = Role::all();
-      $ver = "agregar";
       return view('administracion.users.supervisores', [
-        'users' => $user,
-        'roles' => $role,
-        'ver' => $ver,
-        'result'=> $result,
+        'supervisores'=> $supervisores,
       ]);
     }
 

@@ -31,11 +31,11 @@
               </tr>
             </thead>
             <tbody>
-              @while ($row = odbc_fetch_array($result))
+              @while ($supervisor = odbc_fetch_array($supervisores))
                 <tr>
-                  <td>{{$row['supe_codi']}}</td>
-                  <td>{{$row['supe_nomb']}}</td>
-                  <td> <a href="add_sup_user/{{limpia_espacios($row['supe_codi'])}}"><img src="logos/add-user.png" style="width: 20px;"></a></td>
+                  <td>{{$supervisor['supe_codi']}}</td>
+                  <td>{{$supervisor['supe_nomb']}}</td>
+                  <td> <a href="add_sup_user/{{limpia_espacios($supervisor['supe_codi'])}}"><img src="logos/add-user.png" style="width: 20px;"></a></td>
                 </tr>
               @endwhile
             </tbody>
