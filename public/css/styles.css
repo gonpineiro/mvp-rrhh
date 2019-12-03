@@ -1,0 +1,4 @@
+label[type=not_user] {
+  color: red;
+  font-weight: bold;
+}
