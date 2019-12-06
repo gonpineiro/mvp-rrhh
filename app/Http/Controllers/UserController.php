@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Caffeinated\Shinobi\Models\Role;
+use Caffeinated\Shinobi\Models\Permission;
 use Illuminate\Support\Facades\Hash;
 
 use app\User;
@@ -61,7 +62,7 @@ class UserController extends Controller
 
       $onlyUser = $this->findByIdUser($id);
       $onlyUser->name = $request->input('name');
-      if (!is_null($request->input('password'))) {  $onlyUser->password = Hash::make($request->input('password'));  }
+      if (!is_null($request->input('password'))) { $onlyUser->password = Hash::make($request->input('password'));  }
       $onlyUser->email = $request->input('email');
       $onlyUser->save();
 
@@ -72,22 +73,118 @@ class UserController extends Controller
 
     public function showSupusers(Request $request){
 
+      $ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=C:\SAB5\Database\gsm.dbc;Exclusive=No";
+      $user = "";
+      $pwd = "";
+      //$query_supervisores = "SELECT pers_codi as id, pers_lega as legajo ,pers_nomb as name FROM personal WHERE pers_supe = ' 34' AND EMPTY(pers_fegr)";
+      $query_supervisores ="SELECT supe_codi, supe_nomb as name FROM supervisor WHERE supe_esta <= 1;";
+      //CONEXION Y OBTENCION DE DATOS
+      $conID = odbc_pconnect($ODBCdriver,$user,$pwd);
+      if(!$conID) { print("No se pudo establecer la conexión!");exit();}
+      define ('supervisores', @odbc_exec($conID, $query_supervisores));
+      if (supervisores === false) die("Error en query: " . odbc_errormsg($conID));
+
+      return view('administracion.users.supervisores', [
+        'supervisores'=> supervisores,
+      ]);
+    }
+
+    public function showVigs($id, Request $request){
 
       $ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=C:\SAB5\Database\gsm.dbc;Exclusive=No";
       $user = "";
       $pwd = "";
-      $query_supervisores = "SELECT supe_codi, supe_nomb FROM supervisor WHERE supe_esta <= 1";
-      //dd($supervisores);
+      //dd($id);
+      $query_vigs = "SELECT pers_codi, pers_lega as legajo ,pers_nomb as name FROM personal WHERE pers_supe = '$id' AND EMPTY(pers_fegr)";
+      $query_sup ="SELECT supe_codi, supe_nomb as name FROM supervisor WHERE supe_codi = '$id';";
 
-      if( !($conID = odbc_connect($ODBCdriver,$user,$pwd)) ){ print("No se pudo establecer la conexión!");exit();}
-      if (($supervisores = @odbc_exec($conID, $query_supervisores)) === false) die("Error en query: " . odbc_errormsg($conID));
+      //CONEXION Y OBTENCION DE DATOS
+      $conID = odbc_pconnect($ODBCdriver,$user,$pwd);
+      if(!$conID) { print("No se pudo establecer la conexión!");exit();}
+      define ('vigs', @odbc_exec($conID, $query_vigs));
+      define ('sup', @odbc_exec($conID, $query_sup));
+      if (vigs === false) die("Error en query: " . odbc_errormsg($conID));
+      if (sup === false) die("Error en query: " . odbc_errormsg($conID));
+      $sup = odbc_fetch_array(sup);
 
-      return view('administracion.users.supervisores', [
-        'supervisores'=> $supervisores,
+      return view('administracion.users.vigiporsupervisor', [
+        'vigs'=> vigs,
+        'sup'=> $sup,
+      ]);
+    }
+
+    public function addSupuser($id, Request $request){
+
+      $ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=C:\SAB5\Database\gsm.dbc;Exclusive=No";
+      $user = "";
+      $pwd = "";
+      //$query_supervisor = "SELECT pers_codi as id ,pers_nomb as name FROM personal WHERE pers_codi = $id";
+      $query_sup ="SELECT supe_codi, supe_nomb as name FROM supervisor WHERE supe_codi = '$id';";
+      //CONEXION Y OBTENCION DE DATOS
+      $conID = odbc_pconnect($ODBCdriver,$user,$pwd);
+      if(!$conID) {print("No se pudo establecer la conexión!");exit();}
+      define ('sup', @odbc_exec($conID, $query_sup));
+      if (sup === false) die("Error en query: " . odbc_errormsg($conID));
+      $onlySup = odbc_fetch_array(sup);
+      //dd($onlySup);
+
+      $user = User::all();
+      $ver = "editar";
+
+        return view('administracion.users.users', [
+            'users' => $user,
+            'onlySup' => $onlySup,
+            'ver' => $ver,
+        ]);
+    }
+
+    public function createSupuser(Request $request){
+          //dd($request->input('supe_codi'));
+          $user = User::create([
+          'name' => $request->input('sup_name'),
+          'supe_codi' => $request->input('supe_codi'),
+          //'supe_legajo' => $request->input('supe_legajo'),
+          'email' =>$request->input('email'),
+          'password' => Hash::make($request->input('password')),
+          ]);
+
+          $user->persmissions()->sync(1);
+
+
+      return redirect('/users');
+    }
+
+    public function showVigssup(Request $request){
+      $user = $request->user();
+      $id = $user->supe_codi;
+      $ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=C:\SAB5\Database\gsm.dbc;Exclusive=No";
+      $user = "";
+      $pwd = "";
+      //dd($id);
+      $query_vigs = "SELECT pers_codi, pers_lega as legajo ,pers_nomb as name FROM personal WHERE pers_supe = ' $id' AND EMPTY(pers_fegr)";
+      $query_sup ="SELECT supe_codi, supe_nomb as name FROM supervisor WHERE supe_codi = '$id';";
+
+      //CONEXION Y OBTENCION DE DATOS
+      $conID = odbc_pconnect($ODBCdriver,$user,$pwd);
+      if(!$conID) { print("No se pudo establecer la conexión!");exit();}
+      define ('vigs', @odbc_exec($conID, $query_vigs));
+      define ('sup', @odbc_exec($conID, $query_sup));
+      if (vigs === false) die("Error en query: " . odbc_errormsg($conID));
+      if (sup === false) die("Error en query: " . odbc_errormsg($conID));
+      $sup = odbc_fetch_array(sup);
+
+      return view('administracion.users.vigiporsupervisor', [
+        'vigs'=> vigs,
+        'sup'=> $sup,
       ]);
     }
 
     private function findByIdUser($id){
         return User::where('id', $id)->firstOrFail();
+    }
+
+    function limpia_get($cadena){
+      $cadena = str_replace('%20', ' ', $cadena);
+      return $cadena;
     }
 }

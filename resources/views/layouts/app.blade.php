@@ -49,6 +49,7 @@
                                 {{-- <a class="dropdown-item" href="/hosts"><span>Todos</span></a> --}}
                                 @can ('users.show') <a class="dropdown-item" href="/users"><span>Usuarios generados</span></a>@endcan
                                 @can ('users.show') <a class="dropdown-item" href="/sup_users"><span>Supervisores</span></a>@endcan
+                                @can ('supervisor') <a class="dropdown-item" href="/show_vigs_sup"><span>Vigiladores</span></a>@endcan
                             </div>
                         </li>
                       </ul>

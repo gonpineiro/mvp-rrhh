@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+{{-- <div class="container">
   <div class="row mt-2">
     <div class="col cl-6">
       <h3>Monitores @can ('monitors.create') <a href="/form_monitor"> +</a> @endcan </h3>
@@ -39,5 +39,5 @@
               } );
     </script>
   </div>
-</div>
+</div> --}}
 @endsection

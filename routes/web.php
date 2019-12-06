@@ -14,7 +14,7 @@ require __DIR__ . '/web/auth.php';
 
 
 Route::group(['middleware' => 'auth'], function () {
-  Route::get('/', 'HomeController@index')->name('home')->middleware('can:computadoras.show');
+  Route::get('/', 'HomeController@index')->name('home');
   require __DIR__ . '/web/users.php';
-  
+
 });
