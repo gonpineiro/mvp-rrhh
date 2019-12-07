@@ -62,12 +62,31 @@ class UserController extends Controller
 
     }
 
+    public function editSupuser($id, Request $request){
+      $user = User::all();
+      $onlySup = $this->findByIdUser($id);
+      // $rol = $onlyUser->roles[0];
+      // $role = Role::all();
+      $ver = "editar-sup";
+
+        return view('administracion.users.users', [
+            'users' => $user,
+            'onlySup' => $onlySup,
+            // 'roles' => $role,
+            'ver' => $ver,
+            // 'rol' => $rol,
+        ]);
+
+    }
+
     public function updateUser($id, Request $request){
 
         $onlyUser = $this->findByIdUser($id);
         $onlyUser->name = $request->input('name');
         if (!is_null($request->input('password'))) { $onlyUser->password = Hash::make($request->input('password'));  }
         $onlyUser->email = $request->input('email');
+        $onlyUser->supe_codi = $request->input('supe_codi');
+        $onlyUser->supe_legajo = $request->input('supe_legajo');
         $onlyUser->save();
 
         $onlyUser->roles()->sync($request->input('role'));
@@ -144,7 +163,7 @@ class UserController extends Controller
       //dd($onlySup);
 
       $user = User::all();
-      $ver = "editar";
+      $ver = "agregar-sup";
 
         return view('administracion.users.users', [
             'users' => $user,
