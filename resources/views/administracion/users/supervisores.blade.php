@@ -26,7 +26,9 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
+                {{-- <th scope="col">Legajo</th> --}}
                 <th scope="col">Nombre</th>
+                {{-- <th scope="col">Empresa</th> --}}
                 <th scope="col">Personal</th>
                 <th scope="col">Generar</th>
               </tr>
@@ -35,9 +37,11 @@
               @while ($supervisor = odbc_fetch_array($supervisores))
                 <tr>
                   <td>{{$supervisor['supe_codi']}}</td>
+                  {{-- <td>{{$supervisor['legajo']}}</td> --}}
                   <td>{{$supervisor['name']}}</td>
+                  {{-- <td>{{$supervisor['empr_nomb']}}</td> --}}
                   <td> <a href="show_vigs/{{$supervisor['supe_codi']}}"><img src="logos/add-user.png" style="width: 20px;"></a></td>
-                  <td> <a href="add_sup_user/{{$supervisor['supe_codi']}}"><img src="logos/add-user.png" style="width: 20px;"></a></td>
+                  <td> <a href="add_sup_user/{{$supervisor['supe_codi']}}"><img src="logos/add-cred.png" style="width: 20px;"></a></td>
                 </tr>
               @endwhile
             </tbody>
