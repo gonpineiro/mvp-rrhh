@@ -187,7 +187,8 @@ class SupervisorController extends Controller
 
     public function changeEstate($id, Request $request){
       $onlyRrhhreport = $this->findByIdURrhhreport($id);
-      
+      $user = $request->user();
+      if ($onlyRrhhreport->user_id != $user->id) {return redirect('/');}
       $onlyRrhhreport->estado = 0;
       $onlyRrhhreport->save();
 
