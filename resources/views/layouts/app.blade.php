@@ -43,17 +43,28 @@
                     <ul class="navbar-nav mr-auto">
                       <p style='margin-left: 5em'></p>
                       <ul class="navbar-nav">
+                        @can ('users.show')
                         <li class="nav-item dropdown" >
                             <a id="navbarDropdownAmbientes" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><span class="caret">Usuarios</span></a>
                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 {{-- <a class="dropdown-item" href="/hosts"><span>Todos</span></a> --}}
                                 @can ('users.show') <a class="dropdown-item" href="/users"><span>Usuarios generados</span></a>@endcan
                                 @can ('users.show') <a class="dropdown-item" href="/sup_users"><span>Supervisores</span></a>@endcan
-                                @can ('supervisor') <a class="dropdown-item" href="/show_vigs_sup"><span>Vigiladores</span></a>@endcan
                             </div>
                         </li>
+                        <p style='margin-left: 5em'></p>
+                        @endcan
+
+
+                        <li class="nav-item dropdown" >
+                            <a id="navbarDropdownAmbientes" class="nav-link " href="/show_vigs_sup" role="button" aria-haspopup="true" aria-expanded="false" v-pre><span class="caret">Vigiladores</span></a>
+                        </li>
+                        <p style='margin-left: 5em'></p>
+                        <li class="nav-item dropdown" >
+                            <a id="navbarDropdownAmbientes" class="nav-link " href="/show_vigs_sup/reports" role="button" aria-haspopup="true" aria-expanded="false" v-pre><span class="caret">Reportados</span></a>
+                        </li>
                       </ul>
-                      <p style='margin-left: 50em'></p>
+                      <p style='margin-left: 30em'></p>
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav pull-xs-right">
                         <!-- Authentication Links -->
@@ -95,7 +106,7 @@
     </div>
 
 
-
+@include('sweetalert::alert')
 </body>
 
 </html>
