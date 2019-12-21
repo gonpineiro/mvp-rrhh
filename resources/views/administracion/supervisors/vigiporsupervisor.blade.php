@@ -25,7 +25,6 @@
                   <td> @if (!verificar($vigReports, $vig['pers_codi']))<a href="/report_vig/{{$vig['pers_codi']}}"><img src="{{asset("logos/add-cred.png")}}" style="width: 20px;"></a> @endif </td>
                 </tr>
               @endwhile
-              <p>asdad</p>
             </tbody>
           </table>
       </div>
@@ -46,8 +45,11 @@
 
 @php
   function verificar($array, $key){
-    $count = count($array);
 
+    if ($array == NULL) {
+      return false;
+    }
+    $count = count($array);
     for ($i=0; $i < $count; $i++) {
       if ($key == $array[$i]['pers_codi']) {
         return true;
