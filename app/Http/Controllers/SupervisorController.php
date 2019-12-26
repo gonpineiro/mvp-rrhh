@@ -109,22 +109,22 @@ class SupervisorController extends Controller
       $ODBCpwd = $this->ODBCpwd;
 
       $query_vigs = "SELECT pers_codi, pers_lega as legajo ,pers_nomb as name FROM personal WHERE pers_supe = ' $user->supe_codi' AND EMPTY(pers_fegr)";
-      $query_sup ="SELECT supe_codi, supe_nomb as name FROM supervisor WHERE supe_codi = '$user->supe_codi';";
+      // $query_sup ="SELECT supe_codi, supe_nomb as name FROM supervisor WHERE supe_codi = '$user->supe_codi';";
 
       //CONEXION Y OBTENCION DE DATOS
       $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
       if(!$conID) { print("No se pudo establecer la conexión!");exit();}
       define ('vigs', @odbc_exec($conID, $query_vigs));
-      define ('sup', @odbc_exec($conID, $query_sup));
+      // define ('sup', @odbc_exec($conID, $query_sup));
       if (vigs === false) die("Error en query: " . odbc_errormsg($conID));
-      if (sup === false) die("Error en query: " . odbc_errormsg($conID));
-      $sup = odbc_fetch_array(sup);
+      // if (sup === false) die("Error en query: " . odbc_errormsg($conID));
+      // $sup = odbc_fetch_array(sup);
       $vigReports = Rrhhreport::where('user_id', $user->id)->where('estado', 1)->get();
       // dd($vigReports);
 
       return view('administracion.supervisors.vigiporsupervisor', [
         'vigs'=> vigs,
-        'sup'=> $sup,
+        // 'sup'=> $sup,
         'vigReports' => $vigReports,
       ]);
     }
@@ -139,7 +139,7 @@ class SupervisorController extends Controller
           'password' => Hash::make($request->input('password')),
           ]);
 
-          $user->persmissions()->sync(1);
+          $user->roles()->sync(2);
 
 
       return redirect('/users');

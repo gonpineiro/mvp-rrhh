@@ -55,7 +55,7 @@
                         <p style='margin-left: 5em'></p>
                         @endcan
 
-
+                        @can ('supervisor')
                         <li class="nav-item dropdown" >
                             <a id="navbarDropdownAmbientes" class="nav-link " href="/show_vigs_sup" role="button" aria-haspopup="true" aria-expanded="false" v-pre><span class="caret">Vigiladores</span></a>
                         </li>
@@ -64,7 +64,19 @@
                             <a id="navbarDropdownAmbientes" class="nav-link " href="/show_vigs_sup/reports" role="button" aria-haspopup="true" aria-expanded="false" v-pre><span class="caret">Reportados</span></a>
                         </li>
                       </ul>
-                      <p style='margin-left: 30em'></p>
+                      @endcan
+
+                      <p style='margin-left: 5em'></p>
+
+                      @can ('rrhh')
+                      <p style='margin-left: 5em'></p>
+                      <li class="nav-item dropdown" >
+                          <a id="navbarDropdownAmbientes" class="nav-link " href="/show_vigs_sup/reports/rrhh" role="button" aria-haspopup="true" aria-expanded="false" v-pre><span class="caret">Reportados</span></a>
+                      </li>
+                    </ul>
+                    @endcan
+
+                    <p style='margin-left: 5em'></p>
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav pull-xs-right">
                         <!-- Authentication Links -->

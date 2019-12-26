@@ -21,6 +21,8 @@ class CreateRrhhreportsTable extends Migration
             $table->string('pers_codi')->nullable();
             $table->string('pers_lega')->nullable();
             $table->string('pers_supe')->nullable();
+            $table->string('comentario_sup')->nullable();
+            $table->string('comentario_rrhh')->nullable();
             $table->integer('estado')->nullable();
             $table->timestamps();
         });

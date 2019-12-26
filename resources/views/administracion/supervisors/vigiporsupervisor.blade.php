@@ -5,7 +5,7 @@
   <div class="container">
     <div class="row mt-2">
       <div class="col cl-6">
-        <h3>{{$sup['name']}} </h3>
+        <h3>Personal</h3>
           <br>
           <table class="table table-hover" id="host-table">
             <thead>
