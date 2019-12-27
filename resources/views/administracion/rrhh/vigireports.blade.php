@@ -13,6 +13,7 @@
                 {{-- <th scope="col">Legajo</th> --}}
                 <th scope="col">Nombre</th>
                 <th scope="col">Supervisor</th>
+                <th scope="col">Observación</th>
                 <th scope="col">Reportar</th>
                 <th scope="col">Fecha</th>
               </tr>
@@ -25,7 +26,8 @@
                   {{-- <td>{{$rrhhreport['pers_lega']}}</td> --}}
                   <td>{{$rrhhreport['pers_nomb']}}</td>
                   <td>{{$rrhhreport->user->name}}</td>
-                  <td> <a href="/change_estate/{{$rrhhreport->id}}"><img src="{{asset("logos/add-cred.png")}}" style="width: 20px;"></a> </td>
+                  <td>{{$rrhhreport->comentario_sup}}</td>
+                  <td> <a href="/resolve_report/{{$rrhhreport->id}}/" class="confirmation"><img src="{{asset("logos/add-cred.png")}}" style="width: 20px;"></a> </td>
                   <td>{{$rrhhreport->created_at}}</td>
                 </tr>
                 @endif
@@ -37,11 +39,31 @@
           //JQUERY TABLLE
           $(document).ready(function() {
           $('#host-table').DataTable({
-            "order": [[ 0, "desc" ]]
+            "order": [[ 5, "desc" ]]
           });
             } );
+      </script>
 
+      <script>
+      $('.confirmation').click(function (e) {
+        var href = $(this).attr('href');
+        Swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            input: 'text',
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel plx!",
+            allowOutsideClick: false,
+             preConfirm:  function (result) {
+                window.location.href = href + result;
+                console.log(result);
+            }
+          });
 
+        return false;
+      });
       </script>
     </div>
   </div>

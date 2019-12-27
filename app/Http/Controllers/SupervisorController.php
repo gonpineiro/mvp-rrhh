@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
 use Illuminate\Support\Facades\Hash;
-use RealRashid\SweetAlert\Facades\Alert;
 
 use App\User;
 use App\Rrhhreport;
+use Alert;
 
 class SupervisorController extends Controller
 {
@@ -145,8 +145,8 @@ class SupervisorController extends Controller
       return redirect('/users');
     }
 
-    public function reportVig($id, Request $request){
-
+    public function reportVig($id, $comentario_sup, Request $request){
+        // dd($a);
       $ODBCdriver = $this->ODBCdriver;
       $ODBCuser = $this->ODBCuser;
       $ODBCpwd = $this->ODBCpwd;
@@ -169,6 +169,7 @@ class SupervisorController extends Controller
         'pers_codi' => $onlyVig['pers_codi'],
         'pers_lega' => $onlyVig['pers_lega'],
         'pers_supe' => $onlyVig['pers_supe'],
+        'comentario_sup' => $comentario_sup,
         'estado' => 1,        //REPORTE SOLICITADO
       ]);
 
@@ -186,7 +187,7 @@ class SupervisorController extends Controller
       ]);
     }
 
-    public function changeEstate($id, Request $request){
+    public function changeEstatesup($id, Request $request){
       $onlyRrhhreport = $this->findByIdURrhhreport($id);
       $user = $request->user();
       if ($onlyRrhhreport->user_id != $user->id) {return redirect('/');}

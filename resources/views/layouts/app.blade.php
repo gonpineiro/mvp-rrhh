@@ -16,6 +16,7 @@
     <script src="{{ asset('js/jquery.dataTables.min.js') }}" ></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}" ></script>
     <script src="{{ asset('serviceworker.js') }}" ></script>
+    <script src="{{ asset('vendor/sweetalert/sweetalert.all.js')  }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -25,6 +26,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+
+    @if(config('sweetalert.animation.enable'))
+        <link rel="stylesheet" href="{{ config('sweetalert.animatecss') }}">
+    @endif
 
 @laravelPWA
 </head>
@@ -116,9 +121,6 @@
         </main>
 
     </div>
-
-
-@include('sweetalert::alert')
 </body>
 
 </html>

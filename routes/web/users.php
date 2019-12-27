@@ -10,9 +10,10 @@
   Route::get('/show_vigs/{id}', 'SupervisorController@showVigs')->middleware('can:users.show');
   Route::get('/show_vigs_sup', 'SupervisorController@showVigssup')->middleware('can:supervisor');
   Route::post('/create_sup_user', 'SupervisorController@createSupuser')->middleware('can:users.create');
-  Route::get('/report_vig/{id}', 'SupervisorController@reportVig')->middleware('can:supervisor');
-  Route::get('/change_estate/{id}', 'SupervisorController@changeEstate')->middleware('can:supervisor');
+  Route::get('/report_vig/{id}/{comentario_sup}', 'SupervisorController@reportVig')->middleware('can:supervisor');
+  Route::get('/change_estate/{id}', 'SupervisorController@changeEstatesup')->middleware('can:supervisor');
   Route::get('/show_vigs_sup/reports', 'SupervisorController@showReportvig')->middleware('can:supervisor');
 
   Route::get('/show_vigs_sup/reports/rrhh', 'RrhhController@showReportvig')->middleware('can:rrhh');
+  Route::get('/resolve_report/{id}/{comentario_rrhh}', 'RrhhController@changeEstaterrhh')->middleware('can:rrhh');
  ?>
