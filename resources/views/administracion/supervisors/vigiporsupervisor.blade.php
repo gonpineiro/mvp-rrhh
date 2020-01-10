@@ -43,17 +43,16 @@
       $('.confirmation').click(function (e) {
         var href = $(this).attr('href');
         Swal.fire({
-            title: "Are you sure?",
-            icon: "warning",
+            title: "Observación",
             input: 'text',
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel plx!",
+            confirmButtonText: "Enviar",
+            cancelButtonText: "Cancelar",
             allowOutsideClick: false,
-             preConfirm:  function (result) {
-                window.location.href = href + result;
-                console.log(result);
+            preConfirm:  function (result) {
+              window.location.href = href + result;
+              console.log(result);
             }
           });
 
