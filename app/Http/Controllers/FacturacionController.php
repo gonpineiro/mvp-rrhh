@@ -26,7 +26,19 @@ class FacturacionController extends Controller
 
       $user = $request->user();
 
-      $query_fac ="SELECT fact_obje as cliente, fact_empr as empresa, fact_dfec as fecha, sum(fact_can1) as cantidad_uno, fact_prof as proforma, fact_time as tiempo FROM factvigi WHERE fact_tango = 0 GROUP BY proforma;";
+      $query_fac =
+      "SELECT
+      objetivo.obje_nomb as cliente,
+      empresas.empr_nomb as empresa,
+      fact_dfec as fecha,
+      sum(fact_can1) as cantidad_uno,
+      fact_prof as proforma,
+      fact_time as tiempo
+      FROM factvigi
+      INNER JOIN empresas ON empresas.empr_codi = factvigi.fact_empr
+      INNER JOIN objetivo ON objetivo.obje_codi = factvigi.fact_obje
+      WHERE fact_tango = 0
+      GROUP BY proforma;";
 
       $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
       if(!$conID) { print("No se pudo establecer la conexión!");exit();}
