@@ -28,7 +28,7 @@ class FacturacionController extends Controller
 
       $query_fac =
       "SELECT
-      objetivo.obje_nomb as cliente,
+      objetivos.obje_nomb as cliente,
       empresas.empr_nomb as empresa,
       fact_dfec as fecha,
       sum(fact_can1) as cantidad_uno,
@@ -36,7 +36,7 @@ class FacturacionController extends Controller
       fact_time as tiempo
       FROM factvigi
       INNER JOIN empresas ON empresas.empr_codi = factvigi.fact_empr
-      INNER JOIN objetivo ON objetivo.obje_codi = factvigi.fact_obje
+      INNER JOIN objetivo ON objetivos.obje_codi = factvigi.fact_obje
       WHERE fact_tango = 0
       GROUP BY proforma;";
 
