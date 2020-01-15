@@ -20,12 +20,15 @@ class DatabaseSeeder extends Seeder
       //ROLEs
       DB::table('roles')->insert(['name'  => 'Supervisor'  ,'slug'  => 'supervisor'   ,'description'  => 'Supervisores']);
       DB::table('roles')->insert(['name'  => 'RRHH'  ,'slug'  => 'rrhh'   ,'description'  => 'RRHH']);
+      DB::table('roles')->insert(['name'  => 'Facturación'  ,'slug'  => 'facturacion'   ,'description'  => 'Facturacion']);
 
       DB::table('permissions')->insert(['name'  => 'Supervisor'  ,'slug'  => 'supervisor'   ,'description'  => 'Supervisores']);
       DB::table('permissions')->insert(['name'  => 'RRHH'  ,'slug'  => 'rrhh'   ,'description'  => 'rrhh']);
+      DB::table('permissions')->insert(['name'  => 'Facturación'  ,'slug'  => 'facturacion'   ,'description'  => 'facturacion']);
 
       DB::table('permission_role')->insert(['permission_id'  => 1  ,'role_id'  => 2]);
       DB::table('permission_role')->insert(['permission_id'  => 2  ,'role_id'  => 3]);
+      DB::table('permission_role')->insert(['permission_id'  => 3  ,'role_id'  => 4]);
 
     }
 }

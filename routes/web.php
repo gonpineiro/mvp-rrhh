@@ -20,6 +20,6 @@ Route::group(['middleware' => 'auth'], function () {
   Alert::alert('Title', 'Message', 'Type');
   Route::get('reportar', 'HomeController@index')->name('home');
   require __DIR__ . '/web/users.php';
-  Route::get('/estado_fac', 'FacturacionController@showEstadofacturacion');
+  Route::get('/estado_fac', 'FacturacionController@showEstadofacturacion')->middleware('can:facturacion');
 
 });
