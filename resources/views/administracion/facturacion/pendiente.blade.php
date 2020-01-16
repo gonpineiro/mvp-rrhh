@@ -10,12 +10,14 @@
           <thead>
             <tr>
               <th scope="col">Cliente</th>
+              <th scope="col">Total Puesto</th>
             </tr>
           </thead>
           <tbody>
             @while ($pendiente = odbc_fetch_array($pendientes))
               <tr>
-                <td>{{$pendiente['asig_obje']}}</td>
+                <td>{{$pendiente['cliente']}}</td>
+                <td>{{$pendiente['total']}}</td>
               </tr>
             @endwhile
           </tbody>

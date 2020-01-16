@@ -57,8 +57,16 @@ class FacturacionController extends Controller
 
       $user = $request->user();
 
-      $query_fac =
-       "SELECT asig_obje as cliente FROM asigvigi WHERE GROUP BY asig_obje;";
+      $query_fac = "SELECT
+      objetivo.obje_nomb as cliente,
+      count(DISTINCT asig_pues) as total
+      FROM asigvigi
+      INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
+      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {12/01/19} AND {12/31/19}
+      GROUP BY cliente;";
+      // $query_fac =
+      // "SELECT asig_obje as cliente
+      //  FROM asigvigi WHERE asig_esta < 3 GROUP BY cliente;";
 
       $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
       if(!$conID) { print("No se pudo establecer la conexión!");exit();}
