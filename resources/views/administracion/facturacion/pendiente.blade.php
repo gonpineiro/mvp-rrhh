@@ -10,17 +10,12 @@
           <thead>
             <tr>
               <th scope="col">Cliente</th>
-              <th scope="col">Empresa</th>
-              <th scope="col">Fecha</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">N° Proforma</th>
-              <th scope="col">Creado</th>
             </tr>
           </thead>
           <tbody>
-            @while ($factura = odbc_fetch_array($facturas))
+            @while ($pendiente = odbc_fetch_array($pendientes))
               <tr>
-                <td>{{$factura['cliente']}}</td>
+                <td>{{$pendiente['asig_obje']}}</td>
               </tr>
             @endwhile
           </tbody>

@@ -27,18 +27,18 @@ class FacturacionController extends Controller
       $user = $request->user();
 
       $query_fac =
-      "SELECT
-      objetivos.obje_nomb as cliente,
-      empresas.empr_nomb as empresa,
-      fact_dfec as fecha,
-      sum(fact_can1) as cantidad_uno,
-      fact_prof as proforma,
-      fact_time as tiempo
-      FROM factvigi
-      INNER JOIN empresas ON empresas.empr_codi = factvigi.fact_empr
-      INNER JOIN objetivo ON objetivos.obje_codi = factvigi.fact_obje
-      WHERE fact_tango = 0
-      GROUP BY proforma;";
+       "SELECT
+       objetivo.obje_nomb as cliente,
+       empresas.empr_nomb as empresa,
+       fact_dfec as fecha,
+       sum(fact_can1) as cantidad_uno,
+       fact_prof as proforma,
+       fact_time as tiempo
+       FROM factvigi
+       INNER JOIN empresas ON empresas.empr_codi = factvigi.fact_empr
+       INNER JOIN objetivo ON objetivo.obje_codi = factvigi.fact_obje
+       WHERE fact_tango = 0
+       GROUP BY proforma;";
 
       $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
       if(!$conID) { print("No se pudo establecer la conexión!");exit();}
@@ -47,6 +47,27 @@ class FacturacionController extends Controller
 
       return view('administracion.facturacion.estado', [
         'facturas'=> facturas,
+        ]);
+    }
+
+    public function showPendientefacturacion(Request $request){
+      $ODBCdriver = $this->ODBCdriver;
+      $ODBCuser = $this->ODBCuser;
+      $ODBCpwd = $this->ODBCpwd;
+
+      $user = $request->user();
+
+      $query_fac =
+       "SELECT asig_obje as cliente FROM asigvigi WHERE GROUP BY asig_obje;";
+
+      $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
+      if(!$conID) { print("No se pudo establecer la conexión!");exit();}
+      define ('pendientes', @odbc_exec($conID, $query_fac));
+      if (pendientes === false) die("Error en query: " . odbc_errormsg($conID));
+
+      // dd(facturas);
+      return view('administracion.facturacion.pendiente', [
+        'pendientes'=> pendientes,
         ]);
     }
 }
