@@ -57,16 +57,23 @@ class FacturacionController extends Controller
 
       $user = $request->user();
 
+      // $query_fac = "SELECT
+      // asig_obje as id,
+      // objetivo.obje_nomb as cliente,
+      // count(DISTINCT asig_pues) as total
+      // FROM asigvigi
+      // INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
+      // WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {12/01/19} AND {12/31/19}
+      // GROUP BY cliente;";
+
       $query_fac = "SELECT
+      asig_obje as id,
       objetivo.obje_nomb as cliente,
       count(DISTINCT asig_pues) as total
       FROM asigvigi
       INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
       WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {12/01/19} AND {12/31/19}
       GROUP BY cliente;";
-      // $query_fac =
-      // "SELECT asig_obje as cliente
-      //  FROM asigvigi WHERE asig_esta < 3 GROUP BY cliente;";
 
       $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
       if(!$conID) { print("No se pudo establecer la conexión!");exit();}
@@ -76,6 +83,45 @@ class FacturacionController extends Controller
       // dd(facturas);
       return view('administracion.facturacion.pendiente', [
         'pendientes'=> pendientes,
+        ]);
+    }
+
+    public function showPendientecliente($id, Request $request){
+      $ODBCdriver = $this->ODBCdriver;
+      $ODBCuser = $this->ODBCuser;
+      $ODBCpwd = $this->ODBCpwd;
+
+      $user = $request->user();
+
+      $query_fac = "SELECT
+      pues_codi,
+      objetivo.obje_nomb as cliente,
+      puestos.pues_nomb as puesto,
+      count(pues_codi) as cantidad_asig,
+      puestos.pues_dhor as desde,
+      puestos.pues_hhor as hasta
+      FROM asigvigi
+      INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
+      INNER JOIN puestos ON puestos.pues_codi = asigvigi.asig_pues
+      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {12/01/19} AND {12/31/19} AND asig_obje = $id
+      GROUP BY pues_codi;";
+
+      $query_cliente = "SELECT obje_nomb as cliente FROM objetivo WHERE obje_codi = $id;";
+
+
+      $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
+      if(!$conID) { print("No se pudo establecer la conexión!");exit();}
+
+      define ('pendientes', @odbc_exec($conID, $query_fac));
+      if (pendientes === false) die("Error en query: " . odbc_errormsg($conID));
+
+      define ('cliente', @odbc_exec($conID, $query_cliente));
+      if (cliente === false) die("Error en query: " . odbc_errormsg($conID));
+      $cliente = odbc_fetch_array(cliente);
+      // dd(facturas);
+      return view('administracion.facturacion.pendiente_cliente', [
+        'pendientes'=> pendientes,
+        'cliente'=> $cliente,
         ]);
     }
 }
