@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Charts\PieChart;
 class HomeController extends Controller
 {
     /**
@@ -22,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $chart = new PieChart;
+        $chart->labels(['One', 'Two', 'Three']);
+        $chart->dataset('My dataset 1', 'pie', [1, 2, 3]);
+        return view('home',['chart' => $chart]);
     }
 }

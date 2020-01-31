@@ -10,4 +10,12 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public $ODBCdriver, $ODBCuser, $ODBCpwd;
+
+    public function __construct(){
+      $this->ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=C:\SAB5\Database\gsm.dbc;Exclusive=No";
+      $this->ODBCuser = "";
+      $this->ODBCpwd = "";
+    }
 }

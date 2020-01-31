@@ -31,5 +31,30 @@
               } );
     </script>
   </div>
+  <br>
+  <div class="row mt-2">
+      <div class="col cl-6">
+        <div class="row mt-2">
+          <h3>Puestos: {{$cantidadPuestos}}</h3>
+        </div>
+        <div class="row mt-2">
+          {{$puestoChart->container()}}
+          {!! $puestoChart->script() !!}
+        </div>
+      </div>
+      <div class="col cl-6">
+        <div class="row mt-2">
+          <h3>Clientes: {{$cantidadClientes}}</h3>
+        </div>
+        <div class="row mt-2">
+          {{$clienteChart->container()}}
+          {!! $clienteChart->script() !!}
+        </div>
+      </div>
+  </div>
+
+
 </div>
+
+
 @endsection

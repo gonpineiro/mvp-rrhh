@@ -5,19 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Caffeinated\Shinobi\Models\Role;
 use Caffeinated\Shinobi\Models\Permission;
+use App\Charts\PieChart;
 
 use App\User;
 use Alert;
 
 class FacturacionController extends Controller
 {
-    public $ODBCdriver, $ODBCuser, $ODBCpwd;
 
-    public function __construct(){
-      $this->ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=C:\SAB5\Database\gsm.dbc;Exclusive=No";
-      $this->ODBCuser = "";
-      $this->ODBCpwd = "";
-    }
 
     public function showEstadofacturacion(Request $request){
       $ODBCdriver = $this->ODBCdriver;
@@ -57,32 +52,64 @@ class FacturacionController extends Controller
 
       $user = $request->user();
 
-      // $query_fac = "SELECT
-      // asig_obje as id,
-      // objetivo.obje_nomb as cliente,
-      // count(DISTINCT asig_pues) as total
-      // FROM asigvigi
-      // INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
-      // WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {12/01/19} AND {12/31/19}
-      // GROUP BY cliente;";
+      //CONEXION CON BBDD OBDC
+      $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
+      if(!$conID) { print("No se pudo establecer la conexión!");exit();}
 
+      //PUESTOS PENDIENTES A FACTURAR AGRUPADOS POR CLIENTE
       $query_fac = "SELECT
       asig_obje as id,
       objetivo.obje_nomb as cliente,
       count(DISTINCT asig_pues) as total
       FROM asigvigi
       INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
-      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {12/01/19} AND {12/31/19}
+      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {01/01/20} AND {01/30/20}
       GROUP BY cliente;";
 
-      $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
-      if(!$conID) { print("No se pudo establecer la conexión!");exit();}
       define ('pendientes', @odbc_exec($conID, $query_fac));
       if (pendientes === false) die("Error en query: " . odbc_errormsg($conID));
 
-      // dd(facturas);
+      //CANTIDAD DE PUESTOS FACTURADOS
+      $query_cant_fac = "SELECT count(DISTINCT asig_pues) as cantidad_asig FROM asigvigi WHERE asig_esta = 3 AND NOT EMPTY (asig_fact) AND asig_fech BETWEEN {01/01/20} AND {01/30/20}";
+      define ('cantidad_fac', @odbc_exec($conID, $query_cant_fac));
+      if (cantidad_fac === false) die("Error en query: " . odbc_errormsg($conID));
+      //CANTIDAD DE PUESTOS NO FACTURADOS
+      $query_cant_no_fac = "SELECT count(DISTINCT asig_pues) as cantidad_asig FROM asigvigi WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {01/01/20} AND {01/30/20}";
+      define ('cantidad_no_fac', @odbc_exec($conID, $query_cant_no_fac));
+      if (cantidad_no_fac === false) die("Error en query: " . odbc_errormsg($conID));
+      //CANTIDAD DE CLIENTES NO FACTURADOS
+      $query_cant_no_fac_cli = "SELECT count(DISTINCT asig_obje) as cantidad_asig FROM asigvigi WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {01/01/20} AND {01/30/20}";
+      define ('cantidad_no_fac_cli', @odbc_exec($conID, $query_cant_no_fac_cli));
+      if (cantidad_no_fac_cli === false) die("Error en query: " . odbc_errormsg($conID));
+      //CANTIDAD DE CLIENTES
+      $query_cant_cli = "SELECT count(DISTINCT asig_obje) as cantidad_asig FROM asigvigi WHERE asig_fech BETWEEN {01/01/20} AND {01/30/20}";
+      define ('cantidad_cli', @odbc_exec($conID, $query_cant_cli));
+      if (cantidad_cli === false) die("Error en query: " . odbc_errormsg($conID));
+
+     $puestosFac = (int)odbc_fetch_array(cantidad_fac)['cantidad_asig'];
+     $puestosNofac = (int)odbc_fetch_array(cantidad_no_fac)['cantidad_asig'];
+
+     $cantidadClientes = (int)odbc_fetch_array(cantidad_cli)['cantidad_asig'];
+     $clientesNofac = (int)odbc_fetch_array(cantidad_no_fac_cli)['cantidad_asig'];
+
+      $puestoChart = new PieChart;
+      $puestoChart->labels(['Facturado', 'No facturado'])
+            ->dataset('PIE', 'pie', [$puestosFac,$puestosNofac])
+            ->backgroundcolor(["rgb(15, 50, 170)","rgb(185, 15, 20)"]);
+
+      $clienteChart = new PieChart;
+      $clienteChart->labels(['Facturado', 'No facturado'])
+            ->dataset('PIE', 'pie', [$cantidadClientes - $clientesNofac, $clientesNofac])
+            ->backgroundcolor(["rgb(15, 50, 170)","rgb(185, 15, 20)"]);
+
+
+      // dd($cantidadPuestos);
       return view('administracion.facturacion.pendiente', [
         'pendientes'=> pendientes,
+        'puestoChart' => $puestoChart,
+        'clienteChart' => $clienteChart,
+        'cantidadClientes' => $cantidadClientes,
+        'cantidadPuestos' => $puestosFac + $puestosNofac,
         ]);
     }
 
@@ -103,11 +130,10 @@ class FacturacionController extends Controller
       FROM asigvigi
       INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
       INNER JOIN puestos ON puestos.pues_codi = asigvigi.asig_pues
-      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {12/01/19} AND {12/31/19} AND asig_obje = $id
+      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {01/01/20} AND {01/30/20} AND asig_obje = $id
       GROUP BY pues_codi;";
 
       $query_cliente = "SELECT obje_nomb as cliente FROM objetivo WHERE obje_codi = $id;";
-
 
       $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
       if(!$conID) { print("No se pudo establecer la conexión!");exit();}

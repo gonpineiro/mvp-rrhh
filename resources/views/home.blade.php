@@ -19,13 +19,25 @@
          <a href="/users" type="button"style="width: 100%;margin: 5px;" class="btn btn-dark btn-lg">Usuarios</a>
          <a href="/sup_users" type="button"style="width: 100%;margin: 5px;background-color: #B6252A;" class="btn btn-primary btn-lg">Supervisores</a>
        @endcan
-    <script >
-            $(document).ready(function() {
-            $('#host-table').DataTable({
-              "order": [[ 0, "desc" ]]
-            });
-              } );
-    </script>
+      <script >
+              $(document).ready(function() {
+              $('#host-table').DataTable({
+                "order": [[ 0, "desc" ]]
+              });
+                } );
+      </script>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+      <div class="col cl-6">
+        {{$chart->container()}}
+      </div>
   </div>
 </div>
+
+
+
+{!! $chart->script() !!}
+
 @endsection
