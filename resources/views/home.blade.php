@@ -8,6 +8,9 @@
        @can ('facturacion')
          <a href="/estado_fac" type="button"style="width: 100%;margin: 5px;background-color: #B6252A;" class="btn btn-primary btn-lg">Facturacion</a>
        @endcan
+       @can ('facturacion')
+         <a href="/pendiente_fac" type="button"style="width: 100%;margin: 5px;background-color: #B6252A;" class="btn btn-primary btn-lg">Pendiente a Fac</a>
+       @endcan
        @can ('rrhh')
          <a href="/show_vigs_sup/reports/rrhh" type="button"style="width: 100%;margin: 5px;background-color: #B6252A;" class="btn btn-primary btn-lg">Reportados</a>
        @endcan
