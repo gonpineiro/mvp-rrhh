@@ -35,7 +35,7 @@
   <div class="row mt-2">
       <div class="col cl-6">
         <div class="row mt-2">
-          <h3>Puestos: {{$cantidadPuestos}}</h3>
+          <p>Puestos con asignaciones pendientes a facturar.</p>
         </div>
         <div class="row mt-2">
           {{$puestoChart->container()}}
