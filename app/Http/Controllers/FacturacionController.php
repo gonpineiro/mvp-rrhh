@@ -71,19 +71,19 @@ class FacturacionController extends Controller
       if (pendientes === false) die("Error en query: " . odbc_errormsg($conID));
 
       //CANTIDAD DE PUESTOS FACTURADOS
-      $query_cant_fac = "SELECT count(DISTINCT asig_pues) as cantidad_asig FROM asigvigi WHERE asig_esta = 3 AND NOT EMPTY (asig_fact) AND asig_fech BETWEEN {01/01/20} AND {01/31/20}";
+      $query_cant_fac = "SELECT count(DISTINCT asig_pues) as cantidad_asig FROM asigvigi WHERE asig_esta = 3 AND NOT EMPTY (asig_fact) AND asig_fech BETWEEN {02/01/20} AND {02/29/20}";
       define ('cantidad_fac', @odbc_exec($conID, $query_cant_fac));
       if (cantidad_fac === false) die("Error en query: " . odbc_errormsg($conID));
       //CANTIDAD DE PUESTOS NO FACTURADOS
-      $query_cant_no_fac = "SELECT count(DISTINCT asig_pues) as cantidad_asig FROM asigvigi WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {01/01/20} AND {01/31/20}";
+      $query_cant_no_fac = "SELECT count(DISTINCT asig_pues) as cantidad_asig FROM asigvigi WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {02/01/20} AND {02/29/20}";
       define ('cantidad_no_fac', @odbc_exec($conID, $query_cant_no_fac));
       if (cantidad_no_fac === false) die("Error en query: " . odbc_errormsg($conID));
       //CANTIDAD DE CLIENTES NO FACTURADOS
-      $query_cant_no_fac_cli = "SELECT count(DISTINCT asig_obje) as cantidad_asig FROM asigvigi WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {01/01/20} AND {01/31/20}";
+      $query_cant_no_fac_cli = "SELECT count(DISTINCT asig_obje) as cantidad_asig FROM asigvigi WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {02/01/20} AND {02/29/20}";
       define ('cantidad_no_fac_cli', @odbc_exec($conID, $query_cant_no_fac_cli));
       if (cantidad_no_fac_cli === false) die("Error en query: " . odbc_errormsg($conID));
       //CANTIDAD DE CLIENTES
-      $query_cant_cli = "SELECT count(DISTINCT asig_obje) as cantidad_asig FROM asigvigi WHERE asig_fech BETWEEN {01/01/20} AND {01/31/20}";
+      $query_cant_cli = "SELECT count(DISTINCT asig_obje) as cantidad_asig FROM asigvigi WHERE asig_fech BETWEEN {02/01/20} AND {02/29/20}";
       define ('cantidad_cli', @odbc_exec($conID, $query_cant_cli));
       if (cantidad_cli === false) die("Error en query: " . odbc_errormsg($conID));
 
