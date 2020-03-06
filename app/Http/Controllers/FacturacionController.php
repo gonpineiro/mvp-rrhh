@@ -64,7 +64,7 @@ class FacturacionController extends Controller
       count(DISTINCT asig_pues) as total
       FROM asigvigi
       INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
-      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {01/01/20} AND {01/31/20}
+      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {02/01/20} AND {02/29/20}
       GROUP BY cliente;";
 
       define ('pendientes', @odbc_exec($conID, $query_fac));
@@ -139,7 +139,7 @@ class FacturacionController extends Controller
       FROM asigvigi
       INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
       INNER JOIN puestos ON puestos.pues_codi = asigvigi.asig_pues
-      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {01/01/20} AND {01/31/20} AND asig_obje = $id
+      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {02/01/20} AND {02/29/20} AND asig_obje = $id
       GROUP BY pues_codi;";
 
       // $query_fac = "SELECT
