@@ -131,11 +131,7 @@ class FacturacionController extends Controller
       puestos.pues_nomb as puesto,
       count(pues_codi) as cantidad_asig,
       puestos.pues_dhor as desde,
-      puestos.pues_hhor as hasta,
-      asig_dhor,
-      asig_hhor,
-      CONVERT (varchar, asig_dhor, 103) as dhor,
-      CONVERT (varchar, asig_dhor, 103) as hhor
+      puestos.pues_hhor as hasta
       FROM asigvigi
       INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
       INNER JOIN puestos ON puestos.pues_codi = asigvigi.asig_pues
