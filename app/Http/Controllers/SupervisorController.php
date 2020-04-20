@@ -194,4 +194,26 @@ class SupervisorController extends Controller
   private function findByIdURrhhreport($id){
       return Rrhhreport::where('id', $id)->firstOrFail();
   }
+
+  public function showVigsApi(Request $request){
+
+    $ODBCdriver = $this->ODBCdriver;
+    $ODBCuser = $this->ODBCuser;
+    $ODBCpwd = $this->ODBCpwd;
+
+    $query_sup ="SELECT * FROM personal;";
+
+    //CONEXION Y OBTENCION DE DATOS
+    $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);    
+    if(!$conID) { print("No se pudo establecer la conexión!");exit();}
+    
+    define ('sup', @odbc_exec($conID, $query_sup));
+    if (sup === false) die("Error en query: " . odbc_errormsg($conID));
+    $sup = odbc_fetch_array(sup);
+    $vigReports = NULL;
+
+    
+    return response()->json($sup, 200);
+    
+  }
 }

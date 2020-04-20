@@ -12,8 +12,8 @@
               <!-- <th scope="col">Cliente</th> -->
               <th scope="col">Puesto</th>
               <th scope="col">Cant. Asignaciones</th>
-              <th scope="col">Desde</th>
-              <th scope="col">Hasta</th>
+              {{-- <th scope="col">Desde</th>
+              <th scope="col">Hasta</th> --}}
               <th scope="col">Total</th>
             </tr>
           </thead>
@@ -23,8 +23,8 @@
                 <!-- <td>{{$pendiente['cliente']}}</td> -->
                 <td>{{$pendiente['puesto']}}</td>
                 <td>{{$pendiente['cantidad_asig']}}</td>
-                <td>{{$pendiente['desde']}}</td>
-                <td>{{$pendiente['dhor']}}</td>
+                {{-- <td>{{$pendiente['desde']}}</td>
+                <td>{{$pendiente['dhor']}}</td> --}}
                 <td>{{Carbon\Carbon::parse($pendiente['asig_dhor'])->diffInHours(Carbon\Carbon::parse($pendiente['asig_hhor']))}}</td>
               </tr>
             @endwhile
