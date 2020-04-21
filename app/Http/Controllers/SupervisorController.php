@@ -209,7 +209,7 @@ class SupervisorController extends Controller
     
     define ('sup', @odbc_exec($conID, $query_sup));
     if (sup === false) die("Error en query: " . odbc_errormsg($conID));
-    $sup = odbc_fetch_array(sup);
+    $sup = odbc_fetch_object(sup);
     $vigReports = NULL;
 
     
