@@ -222,7 +222,7 @@ class SupervisorController extends Controller
     };
     
     $objetoFinal = (object)$data;
-    dd($data);
+    //dd($data);
     return response()->json($objetoFinal, 200);    
 
   }
