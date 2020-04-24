@@ -209,11 +209,19 @@ class SupervisorController extends Controller
     
     define ('sup', @odbc_exec($conID, $query_sup));
     if (sup === false) die("Error en query: " . odbc_errormsg($conID));
-    $sup = odbc_fetch_object(sup);
-    $vigReports = NULL;
+    
+    $i = 0;
+    while($row = odbc_fetch_array(sup)) {
+      $data[$i] = array(
+          $row['pers_codi'],
+          utf8_encode ($row['pers_nomb'])
+      );
+      $i++; 
+    };
+    
+    $objetoFinal = (object)$data;
+    return response()->json($objetoFinal, 200);
+    //var_dump($obj == $data);
 
-    
-    return response()->json($sup, 200);
-    
   }
 }
