@@ -94,6 +94,31 @@ class SupervisorController extends Controller
       ]);
     }
 
+    public function showGerentePersonal($id, Request $request){
+
+      $ODBCdriver = $this->ODBCdriver;
+      $ODBCuser = $this->ODBCuser;
+      $ODBCpwd = $this->ODBCpwd;
+
+      $query_vigs = "SELECT pers_codi, pers_lega as legajo ,pers_nomb as name FROM personal WHERE pers_supe = '$id' AND EMPTY(pers_fegr)";
+      $query_sup ="SELECT supe_codi, supe_nomb as name FROM supervisor WHERE supe_codi = '$id';";
+
+      //CONEXION Y OBTENCION DE DATOS
+      $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
+      if(!$conID) { print("No se pudo establecer la conexión!");exit();}
+      define ('vigs', @odbc_exec($conID, $query_vigs));
+      define ('sup', @odbc_exec($conID, $query_sup));
+      if (vigs === false) die("Error en query: " . odbc_errormsg($conID));
+      if (sup === false) die("Error en query: " . odbc_errormsg($conID));
+      $sup = odbc_fetch_array(sup);
+      $vigReports = NULL;
+      return view('administracion.supervisors.gerentepersonal', [
+        'vigs'=> vigs,
+        'sup'=> $sup,
+        'vigReports'=> $vigReports,
+      ]);
+    }
+
     public function showVigssup(Request $request){
 
       $user = $request->user();
@@ -193,37 +218,116 @@ class SupervisorController extends Controller
 
   private function findByIdURrhhreport($id){
       return Rrhhreport::where('id', $id)->firstOrFail();
-  }
+  } 
 
-  public function showVigsApi(Request $request){
+  public function showOnlyVig($id, Request $request){
 
     $ODBCdriver = $this->ODBCdriver;
     $ODBCuser = $this->ODBCuser;
     $ODBCpwd = $this->ODBCpwd;
 
-    $query_sup ="SELECT * FROM personal;";
+    $query_all = "SELECT * FROM personal WHERE pers_codi = $id";
+
+    $query_personal = 
+    "SELECT 
+    pers_codi as id, 
+    pers_lega as legajo,
+    pers_nomb as name,
+    pers_domi as domicilio,
+    pers_loca as localidad,
+    provinci.prov_nomb as provincia,
+    pers_copo as cp,
+    zonas.zona_nomb as zona,    
+    paises.pais_nomb as nacionalidad,
+    pers_telc as phone_fijo,
+    pers_movp as phone_movil,
+    pers_ndoc as ndoc,
+    pers_fnac as fecha_nac,
+    pers_lugn as lugar_nac,
+    pers_cuil as cuil,
+    pers_fing as fecha_ingreso,
+    pers_fegr as fecha_egreso,
+    pers_frei as fecha_reincidencia,
+    pers_fant as fecha_antecedentes,
+    bancos.banc_nomb as banco,
+    pers_cur as cur,
+    pers_obra as obra_social,
+    supervisor.supe_nomb as name_supe,
+    empresas.empr_nomb as empresa,
+    categori.cate_nomb as categoria
+    FROM personal 
+    INNER JOIN provinci ON provinci.prov_codi = personal.pers_prov
+    INNER JOIN zonas ON zonas.zona_codi = personal.pers_zona
+    INNER JOIN paises ON paises.pais_codi = personal.pers_naci
+    INNER JOIN bancos ON bancos.banc_codi = personal.pers_banc
+    INNER JOIN supervisor ON supervisor.supe_codi = personal.pers_supe
+    INNER JOIN empresas ON empresas.empr_codi = personal.pers_empr
+    INNER JOIN categori ON categori.cate_codi = personal.pers_cate
+    WHERE pers_codi = $id";
+    //$query_sup ="SELECT supe_codi, supe_nomb as name FROM supervisor WHERE supe_codi = '$id';";
 
     //CONEXION Y OBTENCION DE DATOS
-    $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);    
+    $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
     if(!$conID) { print("No se pudo establecer la conexión!");exit();}
-    
-    define ('sup', @odbc_exec($conID, $query_sup));
-    if (sup === false) die("Error en query: " . odbc_errormsg($conID));
-    
-    $i = 0;
-    $pers_codi = 'pers_codi';
-    $pers_nomb = 'pers_nomb';
-    while($row = odbc_fetch_array(sup)) {
-      $data[$i] = array(
-          $pers_codi => $row['pers_codi'],
-          $pers_nomb => utf8_encode ($row['pers_nomb'])
-      );
-      $i++; 
-    };
-    
-    $objetoFinal = (object)$data;
-    //dd($data);
-    return response()->json($objetoFinal, 200);    
 
+    define ('personal', @odbc_exec($conID, $query_personal));
+    if (personal === false) die("Error en query: " . odbc_errormsg($conID));
+
+    define ('all', @odbc_exec($conID, $query_all));
+    if (personal === false) die("Error en query: " . odbc_errormsg($conID));
+   
+    $personal = odbc_fetch_array(personal);
+    //dd($personal);
+   
+    $all = odbc_fetch_array(all);
+    //dd($all);
+
+
+    return view('administracion.personal.legajo', [
+      'personal'=> $personal,
+    ]);
+  }
+
+  public function showAsignacionesPersonal($id, Request $request){
+
+    $ODBCdriver = $this->ODBCdriver;
+    $ODBCuser = $this->ODBCuser;
+    $ODBCpwd = $this->ODBCpwd;
+
+    //GENERAR UN PERIODO DE 30 DIAS DESDE LA FECHA
+    $date_now = date('d-m-Y');    
+    $date_resta = strtotime('-30 day', strtotime($date_now));
+    $date_inicio = date('m-d-Y', $date_resta);
+    $date_fin = date('m-d-Y', strtotime($date_now));
+
+    $query_asignaciones = 
+    "SELECT
+    asig_fech as fecha,
+    asig_dhor as desde,
+    asig_hhor as hasta,
+    asig_time as horario,
+    puestos.pues_nomb as puesto,
+    puestos.pues_nomb as puesto,  
+    objetivo.obje_nomb as objetivo
+    FROM asigvigi     
+    INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje  
+    INNER JOIN puestos ON puestos.pues_codi = asigvigi.asig_pues  
+    WHERE 
+    asig_fech BETWEEN { $date_inicio } AND { $date_fin } 
+    AND asig_vigi = $id";
+
+    //CONEXION Y OBTENCION DE DATOS
+    $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
+    if(!$conID) { print("No se pudo establecer la conexión!");exit();}
+
+    define ('asignaciones', @odbc_exec($conID, $query_asignaciones));
+    if (asignaciones === false) die("Error en query: " . odbc_errormsg($conID));
+    
+    //$asignaciones = odbc_fetch_array(asignaciones);
+    //dd($asignaciones);
+
+    return view('administracion.personal.asignaciones', [
+      'asignaciones'=> asignaciones,
+    ]);
   }
 }

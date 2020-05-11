@@ -14,6 +14,13 @@
   Route::get('/change_estate/{id}', 'SupervisorController@changeEstatesup')->middleware('can:supervisor');
   Route::get('/show_vigs_sup/reports', 'SupervisorController@showReportvig')->middleware('can:supervisor');
 
+  Route::get('/show_perso_ger/{id}', 'SupervisorController@showGerentePersonal')->middleware('can:users.show');
+  Route::get('/only_vig/{id}', 'SupervisorController@showOnlyVig')->middleware('can:supervisor');
+  Route::get('/asignaciones/{id}', 'SupervisorController@showAsignacionesPersonal')->middleware('can:supervisor');
+
+
   Route::get('/show_vigs_sup/reports/rrhh', 'RrhhController@showReportvig')->middleware('can:rrhh');
   Route::get('/resolve_report/{id}/{comentario_rrhh}', 'RrhhController@changeEstaterrhh')->middleware('can:rrhh');
+
+
  ?>

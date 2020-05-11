@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <div class="row mt-2">
-      <div class="col cl-8">
+      <div class="col cl-12">
         <h3>Usuarios</h3>
         <br>
           <table class="table table-hover" id="host-table">

@@ -14,4 +14,4 @@ use Illuminate\Http\Request;
 */
 
 
-Route::get('/sup', 'SupervisorController@showVigsApi');
+Route::get('/sup', 'ApiController@showVigs');

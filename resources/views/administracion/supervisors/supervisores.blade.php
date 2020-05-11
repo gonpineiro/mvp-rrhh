@@ -40,7 +40,7 @@
                   {{-- <td>{{$supervisor['legajo']}}</td> --}}
                   <td>{{$supervisor['name']}}</td>
                   {{-- <td>{{$supervisor['empr_nomb']}}</td> --}}
-                  <td> <a href="show_vigs/{{$supervisor['supe_codi']}}"><img src="logos/add-user.png" style="width: 20px;"></a></td>
+                  <td> <a href="show_perso_ger/{{$supervisor['supe_codi']}}"><img src="logos/add-user.png" style="width: 20px;"></a></td>
                   <td> <a href="add_sup_user/{{$supervisor['supe_codi']}}"><img src="logos/add-cred.png" style="width: 20px;"></a></td>
                 </tr>
               @endwhile
