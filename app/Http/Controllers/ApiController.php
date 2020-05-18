@@ -40,13 +40,13 @@ class ApiController extends Controller
         empresas.empr_nomb as empresa,
         categori.cate_nomb as categoria
         FROM personal 
-        INNER JOIN provinci ON provinci.prov_codi = personal.pers_prov
-        INNER JOIN zonas ON zonas.zona_codi = personal.pers_zona
-        INNER JOIN paises ON paises.pais_codi = personal.pers_naci
-        INNER JOIN bancos ON bancos.banc_codi = personal.pers_banc
-        INNER JOIN supervisor ON supervisor.supe_codi = personal.pers_supe
-        INNER JOIN empresas ON empresas.empr_codi = personal.pers_empr
-        INNER JOIN categori ON categori.cate_codi = personal.pers_cate";
+        LEFT JOIN provinci ON provinci.prov_codi = personal.pers_prov
+        LEFT JOIN zonas ON zonas.zona_codi = personal.pers_zona
+        LEFT JOIN paises ON paises.pais_codi = personal.pers_naci
+        LEFT JOIN bancos ON bancos.banc_codi = personal.pers_banc
+        LEFT JOIN supervisor ON supervisor.supe_codi = personal.pers_supe
+        LEFT JOIN empresas ON empresas.empr_codi = personal.pers_empr
+        LEFT JOIN categori ON categori.cate_codi = personal.pers_cate";
     
         //CONEXION Y OBTENCION DE DATOS
         $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);    
@@ -81,10 +81,8 @@ class ApiController extends Controller
         $empr_nomb = 'empr_nomb';
         $cate_nomb = 'cate_nomb';
 
-        $i = 0;
-
         while($row = odbc_fetch_array(sup)) {          
-          $data[$i] = array(
+          $data[$row['id']] = array(
             $pers_codi => utf8_encode ($row['id']),
             $pers_lega => utf8_encode ($row['legajo']),
             $pers_nomb => utf8_encode ($row['name']),
@@ -111,10 +109,10 @@ class ApiController extends Controller
             $empr_nomb => utf8_encode ($row['empresa']),
             $cate_nomb => utf8_encode ($row['categoria'])
           ); 
-          $i++;
         };     
-        dd($i);  
         return response()->json($data, 200);     
     
-      }
+    }
+
+
 }
