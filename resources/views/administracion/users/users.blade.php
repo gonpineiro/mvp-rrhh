@@ -124,25 +124,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                          <label for="name" >Rol</label>
-                          <select class="form-control" name="role" required>
-                            <option value={{$rol->id}}>{{$rol->name}} </option>
-                            <option disabled>Roles</option>
-                            @foreach ($roles as $role)
-                              <option value="{{$role->id}}">{{$role->name}} </option>
-                            @endforeach
-                          </select>
-                        </div>
-                    </div>
+                   
+
                     <button type="submit" class="btn btn-dark">Modificar</button>
                 </form>
               @endif
 
               @if ($ver == "agregar-sup")
                 <form method="POST" action="/create_sup_user">
-
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-12">
@@ -180,6 +169,18 @@
                                     <strong>{{ $errors->first('password') }}</strong>
                                 </span>
                             @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                          <label for="name" >Roles</label>
+                          <select class="form-control" name="role" required>
+                            <option value="">- - - Seleccione - - -</option>
+                            @foreach ($roles as $role)
+                              <option value="{{$role->id}}">{{$role->name}} </option>
+                            @endforeach
+                          </select>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-dark">Agegar Supervisor</button>

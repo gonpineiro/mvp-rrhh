@@ -1,0 +1,44 @@
+.link {
+    cursor: pointer;
+}
+
+.transparent {
+    background-color: transparent;
+}
+.text-derecha {
+    text-align: right;
+    justify-content: right;
+}
+
+.icon {
+    width: 24px;
+}
+.center {
+    text-align: center;
+}
+
+.red-buttom{
+    width: 100%;
+    margin: 5px;
+    background-color: #B6252A;
+}
+.red-buttom:hover{
+    background-color: #B6252A;
+    border-color: #B6252A;
+}
+
+table {
+    font-size: 0.785rem;
+}
+
+.table td {
+    padding: 0.25rem;
+}
+
+.box {
+    display: flex;
+}
+
+.table-title {
+    margin-right: 10px;
+}

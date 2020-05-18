@@ -62,10 +62,12 @@ class SupervisorController extends Controller
       $user = User::all();
       $ver = "agregar-sup";
 
+      $role = Role::all();
         return view('administracion.users.users', [
             'users' => $user,
             'onlySup' => $onlySup,
             'ver' => $ver,
+            'roles' => $role,
         ]);
     }
 
@@ -143,29 +145,26 @@ class SupervisorController extends Controller
 
       return view('administracion.supervisors.vigiporsupervisor', [
         'vigs'=> vigs,
-        // 'sup'=> $sup,
         'vigReports' => $vigReports,
       ]);
     }
 
     public function createSupuser(Request $request){
-          //dd($request->input('supe_codi'));
           $user = User::create([
           'name' => $request->input('sup_name'),
           'supe_codi' => $request->input('supe_codi'),
-          //'supe_legajo' => $request->input('supe_legajo'),
           'email' =>$request->input('email'),
           'password' => Hash::make($request->input('password')),
           ]);
 
-          $user->roles()->sync(2);
+          $user->roles()->sync($request->input('role'));
 
 
       return redirect('/users');
     }
 
     public function reportVig($id, $comentario_sup, Request $request){
-        // dd($a);
+      //dd($comentario_sup);
       $ODBCdriver = $this->ODBCdriver;
       $ODBCuser = $this->ODBCuser;
       $ODBCpwd = $this->ODBCpwd;
@@ -179,7 +178,7 @@ class SupervisorController extends Controller
       define ('vig', @odbc_exec($conID, $query_vig));
       if (vig === false) die("Error en query: " . odbc_errormsg($conID));
       $onlyVig = odbc_fetch_array(vig);
-      //dd($onlySup);
+     
       if ($onlyVig['pers_supe'] != $user->supe_codi) {return redirect('/show_vigs_sup');}
 
       $rrhh_report = Rrhhreport::create([
