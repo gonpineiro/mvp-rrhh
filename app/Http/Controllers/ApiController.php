@@ -80,9 +80,11 @@ class ApiController extends Controller
         $supe_nomb = 'supe_nomb';
         $empr_nomb = 'empr_nomb';
         $cate_nomb = 'cate_nomb';
-    
-        while($row = odbc_fetch_array(sup)) {
-          $data[$row['id']] = array(
+
+        $i = 0;
+
+        while($row = odbc_fetch_array(sup)) {          
+          $data[$i] = array(
             $pers_codi => utf8_encode ($row['id']),
             $pers_lega => utf8_encode ($row['legajo']),
             $pers_nomb => utf8_encode ($row['name']),
@@ -109,8 +111,9 @@ class ApiController extends Controller
             $empr_nomb => utf8_encode ($row['empresa']),
             $cate_nomb => utf8_encode ($row['categoria'])
           ); 
-          
-        };
+          $i++;
+        };     
+        dd($i);  
         return response()->json($data, 200);     
     
       }

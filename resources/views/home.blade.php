@@ -32,15 +32,6 @@
     </div>
   </div>
 
-  <div class="row mt-2">
-      <div class="col cl-6">
-        {{$chart->container()}}
-      </div>
-  </div>
 </div>
-
-
-
-{!! $chart->script() !!}
 
 @endsection
