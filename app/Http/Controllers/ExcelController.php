@@ -10,6 +10,6 @@ class ExcelController extends Controller
 {
     public function showSupusers(Request $request)
     {
-        return Excel::download(new SupervisoresExport, 'users.xlsx');
+        return Excel::download(new SupervisoresExport, 'supervisores.xlsx');
     }
 }

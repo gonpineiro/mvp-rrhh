@@ -13,8 +13,6 @@ class SupervisoresExport implements FromView
         $ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=C:\SAB5\Database\gsm.dbc;Exclusive=No";
         $ODBCuser = "";
         $ODBCpwd = "";
-        $inicio_periodo = '03/01/20';
-        $fin_periodo = '03/31/20';
 
         $query_supervisores ="SELECT supe_codi, supe_nomb as name FROM supervisor WHERE supe_esta < 1;";
 
