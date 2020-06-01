@@ -89,6 +89,7 @@ class SupervisorController extends Controller
       if (sup === false) die("Error en query: " . odbc_errormsg($conID));
       $sup = odbc_fetch_array(sup);
       $vigReports = NULL;
+      
       return view('administracion.supervisors.vigiporsupervisor', [
         'vigs'=> vigs,
         'sup'=> $sup,
@@ -114,6 +115,7 @@ class SupervisorController extends Controller
       if (sup === false) die("Error en query: " . odbc_errormsg($conID));
       $sup = odbc_fetch_array(sup);
       $vigReports = NULL;
+      
       return view('administracion.supervisors.gerentepersonal', [
         'vigs'=> vigs,
         'sup'=> $sup,

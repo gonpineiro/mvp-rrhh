@@ -8,7 +8,7 @@
             <div class="row mt-2">
                 <div class="col cl-2 box">
                     <h3 class="table-title">Personal de</h3>
-                    <img src="{{ asset('logos/xlsx.png') }}" class="link">
+                    <a href="/show_perso_ger/excel/{{$sup['supe_codi']}}"><img src="{{ asset('logos/xlsx.png') }}" class="link"></a>
                 </div>
                 <div class="col cl-2 text-derecha ">
                     <img src="{{ asset('logos/return-button.png') }}" onclick="goBack()" class="center link">

@@ -8,6 +8,7 @@
 
   Route::get('/sup_users', 'SupervisorController@showSupusers')->middleware('can:consultar.supervisor');
   Route::get('/sup_users/excel', 'ExcelController@showSupusers')->middleware('can:consultar.supervisor');
+
   Route::get('/add_sup_user/{id}', 'SupervisorController@addSupuser')->middleware('can:users.show');
   Route::get('/show_vigs/{id}', 'SupervisorController@showVigs')->middleware('can:users.show');
   Route::get('/show_vigs_sup', 'SupervisorController@showVigssup')->middleware('can:consultar.personal');
@@ -18,6 +19,8 @@
   Route::get('/change_estate/{id}', 'SupervisorController@changeEstatesup')->middleware('can:reportar.personal');
 
   Route::get('/show_perso_ger/{id}', 'SupervisorController@showGerentePersonal')->middleware('can:personal.supervisores');
+  Route::get('/show_perso_ger/excel/{id}', 'ExcelController@showGerentePersonal')->middleware('can:personal.supervisores');
+
   Route::get('/only_vig/{id}', 'SupervisorController@showOnlyVig')->middleware('can:consultar.legajo');
   Route::get('/asignaciones/{id}', 'SupervisorController@showAsignacionesPersonal')->middleware('can:consultar.asignaciones');
 
