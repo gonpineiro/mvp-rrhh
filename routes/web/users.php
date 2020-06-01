@@ -7,6 +7,7 @@
   Route::post('/create_sup_user', 'SupervisorController@createSupuser')->middleware('can:users.create');
 
   Route::get('/sup_users', 'SupervisorController@showSupusers')->middleware('can:consultar.supervisor');
+  Route::get('/sup_users/excel', 'ExcelController@showSupusers')->middleware('can:consultar.supervisor');
   Route::get('/add_sup_user/{id}', 'SupervisorController@addSupuser')->middleware('can:users.show');
   Route::get('/show_vigs/{id}', 'SupervisorController@showVigs')->middleware('can:users.show');
   Route::get('/show_vigs_sup', 'SupervisorController@showVigssup')->middleware('can:consultar.personal');

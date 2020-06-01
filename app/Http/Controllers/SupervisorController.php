@@ -41,7 +41,7 @@ class SupervisorController extends Controller
       return view('administracion.supervisors.supervisores', [
         'supervisores'=> supervisores,
         ]);
-      }
+    }
 
     public function addSupuser($id, Request $request){
 
