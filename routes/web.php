@@ -21,6 +21,8 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('reportar', 'HomeController@index')->name('home');
   require __DIR__ . '/web/users.php';
   Route::get('/estado_fac', 'FacturacionController@showEstadofacturacion')->middleware('can:facturacion');
+  Route::get('/estado_fac/excel', 'ExcelController@showEstadofacturacion')->middleware('can:facturacion');
+
   Route::get('/pendiente_fac', 'FacturacionController@showPendientefacturacion')->middleware('can:facturacion');
   Route::get('/pendiente_fac/{id}', 'FacturacionController@showPendientecliente')->middleware('can:facturacion');
 
