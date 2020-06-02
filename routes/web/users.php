@@ -23,6 +23,7 @@
 
   Route::get('/only_vig/{id}', 'SupervisorController@showOnlyVig')->middleware('can:consultar.legajo');
   Route::get('/asignaciones/{id}', 'SupervisorController@showAsignacionesPersonal')->middleware('can:consultar.asignaciones');
+  Route::get('/asignaciones/excel/{id}', 'ExcelController@showAsignacionesPersonal')->middleware('can:consultar.asignaciones');
 
 
   Route::get('/show_vigs_sup/reports/rrhh', 'RrhhController@showReportvig')->middleware('can:rrhh');

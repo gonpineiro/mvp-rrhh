@@ -329,6 +329,7 @@ class SupervisorController extends Controller
 
     return view('administracion.personal.asignaciones', [
       'asignaciones'=> asignaciones,
+      'id' => $id
     ]);
   }
 }

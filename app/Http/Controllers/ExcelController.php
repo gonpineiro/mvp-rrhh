@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SupervisoresExport;
 use App\Exports\VigsSupervisorExport;
 use App\Exports\EstadoFacturacionExport;
+use App\Exports\AsignacionExport;
 
 class ExcelController extends Controller
 {
@@ -33,12 +34,13 @@ class ExcelController extends Controller
         $query_vigs = "SELECT pers_codi, pers_lega as legajo ,pers_nomb as name FROM personal WHERE pers_supe = '$id' AND EMPTY(pers_fegr)";
 
         $conID = odbc_pconnect($ODBCdriver, $ODBCuser, $ODBCpwd);
-        define('vigs', @odbc_exec($conID, $query_vigs));     
+        define('vigs', @odbc_exec($conID, $query_vigs));
         
         return Excel::download(new VigsSupervisorExport(vigs), 'personal.xlsx');
     }
 
-    public function showEstadofacturacion(Request $request){
+    public function showEstadofacturacion(Request $request)
+    {
         $ODBCdriver = $this->ODBCdriver;
         $ODBCuser = $this->ODBCuser;
         $ODBCpwd = $this->ODBCpwd;
@@ -59,11 +61,61 @@ class ExcelController extends Controller
          WHERE fact_tango = 0
          GROUP BY proforma;";
   
-        $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
-        if(!$conID) { print("No se pudo establecer la conexión!");exit();}
-        define ('facturas', @odbc_exec($conID, $query_fac));
-        if (facturas === false) die("Error en query: " . odbc_errormsg($conID));
+        $conID = odbc_pconnect($ODBCdriver, $ODBCuser, $ODBCpwd);
+        if (!$conID) {
+            print("No se pudo establecer la conexión!");
+            exit();
+        }
+        define('facturas', @odbc_exec($conID, $query_fac));
+        if (facturas === false) {
+            die("Error en query: " . odbc_errormsg($conID));
+        }
   
         return Excel::download(new EstadoFacturacionExport(facturas), 'estadoFacturacion.xlsx');
-      }
+    }
+
+    
+
+    public function showAsignacionesPersonal($id, Request $request)
+    {
+        $ODBCdriver = $this->ODBCdriver;
+        $ODBCuser = $this->ODBCuser;
+        $ODBCpwd = $this->ODBCpwd;
+
+        //GENERAR UN PERIODO DE 30 DIAS DESDE LA FECHA
+        $date_now = date('d-m-Y');
+        $date_resta = strtotime('-30 day', strtotime($date_now));
+        $date_inicio = date('m-d-Y', $date_resta);
+        $date_fin = date('m-d-Y', strtotime($date_now));
+
+        $query_asignaciones =
+        "SELECT
+        asig_fech as fecha,
+        asig_dhor as desde,
+        asig_hhor as hasta,
+        asig_time as horario,
+        puestos.pues_nomb as puesto,
+        puestos.pues_nomb as puesto,  
+        objetivo.obje_nomb as objetivo
+        FROM asigvigi     
+        INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje  
+        INNER JOIN puestos ON puestos.pues_codi = asigvigi.asig_pues  
+        WHERE 
+        asig_fech BETWEEN { $date_inicio } AND { $date_fin } 
+        AND asig_vigi = $id";
+
+        //CONEXION Y OBTENCION DE DATOS
+        $conID = odbc_pconnect($ODBCdriver, $ODBCuser, $ODBCpwd);
+        if (!$conID) {
+            print("No se pudo establecer la conexión!");
+            exit();
+        }
+
+        define('asignaciones', @odbc_exec($conID, $query_asignaciones));
+        if (asignaciones === false) {
+            die("Error en query: " . odbc_errormsg($conID));
+        }
+  
+        return Excel::download(new AsignacionExport(asignaciones), 'asignaciones.xlsx');
+    }
 }
