@@ -7,27 +7,27 @@
          <a href="/asd" type="button"style="width: 100%;margin: 5px;background-color: #B6252A;" class="btn btn-primary btn-lg">Botón grande</a> --}}
        
          @can ('facturacion')
-         <a href="/estado_fac" type="button" class="btn btn-primary btn-lg red-buttom">Facturacion</a>
+         <a href="/estado_fac" type="button" class="btn btn-primary btn-lg red-buttom">Clientes Proformados</a>
        @endcan
 
        @can ('facturacion')
-         <a href="/pendiente_fac" type="button" class="btn btn-primary btn-lg red-buttom">Pendiente a Fac</a>
+         <a href="/pendiente_fac" type="button" class="btn btn-primary btn-lg red-buttom">Clientes no Proformados</a>
        @endcan
 
         @can ('rrhh')
-         <a href="/show_vigs_sup/reports/rrhh" type="button" class="btn btn-primary btn-lg red-buttom">Reportados</a>
+         <a href="/show_vigs_sup/reports/rrhh" type="button" class="btn btn-primary btn-lg red-buttom">Reportados por Supervisor</a>
         @endcan
 
         @can ('consultar.personal')
-         <a href="/show_vigs_sup" type="button" class="btn btn-primary btn-lg red-buttom">Personal</a>
+         <a href="/show_vigs_sup" type="button" class="btn btn-primary btn-lg red-buttom">Mi Personal</a>
         @endcan
 
         @can ('consultar.personal')
-        <a href="/show_vigs_sup/reports" type="button" class="btn btn-primary btn-lg red-buttom">Reportados</a>
+        <a href="/show_vigs_sup/reports" type="button" class="btn btn-primary btn-lg red-buttom">Reportados por Mi</a>
         @endcan
 
         @can ('consultar.supervisor')
-            <a href="/sup_users" type="button" class="btn btn-primary btn-lg red-buttom">Supervisores</a>
+            <a href="/sup_users" type="button" class="btn btn-primary btn-lg red-buttom">Consulta de Supervisores</a>
         @endcan
 
         
