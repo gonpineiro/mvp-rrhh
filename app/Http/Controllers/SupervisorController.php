@@ -316,6 +316,8 @@ class SupervisorController extends Controller
     WHERE 
     asig_fech BETWEEN { $date_inicio } AND { $date_fin } 
     AND asig_vigi = $id";
+    
+    $query_vig ="SELECT pers_nomb as name FROM personal WHERE pers_codi = $id;";
 
     //CONEXION Y OBTENCION DE DATOS
     $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
@@ -323,12 +325,14 @@ class SupervisorController extends Controller
 
     define ('asignaciones', @odbc_exec($conID, $query_asignaciones));
     if (asignaciones === false) die("Error en query: " . odbc_errormsg($conID));
-    
-    //$asignaciones = odbc_fetch_array(asignaciones);
-    //dd($asignaciones);
+
+    define ('vig', @odbc_exec($conID, $query_vig));
+    if (vig === false) die("Error en query: " . odbc_errormsg($conID));
+    $vig = odbc_fetch_array(vig);
 
     return view('administracion.personal.asignaciones', [
       'asignaciones'=> asignaciones,
+      'vig' => $vig,
       'id' => $id
     ]);
   }

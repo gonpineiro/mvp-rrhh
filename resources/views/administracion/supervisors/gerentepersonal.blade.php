@@ -5,9 +5,9 @@
 <div class="container">
     <div class="row mt-2">
         <div class="col cl-6">
-            <div class="row mt-2">
+            <div class="row mt-2 box-title">
                 <div class="col cl-2 box">
-                    <h3 class="table-title">Personal de</h3>
+                    <h3 class="table-title">Personal de {{ $sup['name'] }}</h3>
                     <a href="/show_perso_ger/excel/{{$sup['supe_codi']}}"><img src="{{ asset('logos/xlsx.png') }}" class="link"></a>
                 </div>
                 <div class="col cl-2 text-derecha ">

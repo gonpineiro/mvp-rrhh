@@ -7,7 +7,7 @@
         <div class="col cl-6">
             <div class="row mt-2">
                 <div class="col cl-2 box">
-                    <h3 class="table-title">Asignaciones de </h3>
+                    <h2 class="table-title">Asignaciones de {{ $vig['name'] }}</h2>
                     <a href="/asignaciones/excel/{{$id}}"><img src="{{ asset('logos/xlsx.png') }}" class="link"></a>
                 </div>
                 <div class="col cl-2 text-derecha ">
@@ -28,7 +28,7 @@
                 <tbody>
                     <input type="text" name="" value="asd" hidden>
                     @while ($asignacione = odbc_fetch_array($asignaciones))
-                    <tr>)
+                    <tr>
                         <td>{{$asignacione['fecha']}}</td>
                         <td>{{$asignacione['desde']}}</td>
                         <td>{{$asignacione['hasta']}}</td>
