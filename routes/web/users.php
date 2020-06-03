@@ -12,6 +12,7 @@
   Route::get('/add_sup_user/{id}', 'SupervisorController@addSupuser')->middleware('can:users.show');
   Route::get('/show_vigs/{id}', 'SupervisorController@showVigs')->middleware('can:users.show');
   Route::get('/show_vigs_sup', 'SupervisorController@showVigssup')->middleware('can:consultar.personal');
+  Route::get('/show_vigs_sup/excel', 'ExcelController@showVigsSup')->middleware('can:consultar.personal');
 
   //reportar vigilador a rrhh
   Route::get('/show_vigs_sup/reports', 'SupervisorController@showReportvig')->middleware('can:reportar.personal');

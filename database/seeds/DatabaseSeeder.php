@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
       
       DB::table('roles')->insert(['name'  => 'Supervisor operaciones'  ,'slug'  => 'supervisor'   ,'description'  => 'Supervisores operaciones']);
       DB::table('roles')->insert(['name'  => 'Gerente de cuenta'  ,'slug'  => 'gerente.cuente'   ,'description'  => 'Gerente de cuenta']);
-      DB::table('roles')->insert(['name'  => 'RRHH'  ,'slug'  => 'rrhh'   ,'description'  => 'RRHH']);
+      DB::table('roles')->insert(['name'  => 'Recursos humanos'  ,'slug'  => 'Recursos humanos'   ,'description'  => 'Recursos humanos']);
       DB::table('roles')->insert(['name'  => 'Facturación'  ,'slug'  => 'facturacion'   ,'description'  => 'Facturacion']);
 
       DB::table('permissions')->insert(['name'  => 'Consultar supervisores'  ,'slug'  => 'consultar.supervisor','description'  => 'Consultar Supervisores']);
@@ -56,6 +56,8 @@ class DatabaseSeeder extends Seeder
       DB::table('permission_role')->insert(['permission_id'  => 4  ,'role_id'  => 3]);
       DB::table('permission_role')->insert(['permission_id'  => 5  ,'role_id'  => 3]);
       DB::table('permission_role')->insert(['permission_id'  => 6  ,'role_id'  => 3]);
+
+      DB::table('permission_role')->insert(['permission_id'  => 7  ,'role_id'  => 4]);
 
 
 /*       $this->call(UsersSeeder::class);

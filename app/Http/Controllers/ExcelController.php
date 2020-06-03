@@ -8,6 +8,7 @@ use App\Exports\SupervisoresExport;
 use App\Exports\VigsSupervisorExport;
 use App\Exports\EstadoFacturacionExport;
 use App\Exports\AsignacionExport;
+use App\Exports\ShowVigsSupExport;
 
 class ExcelController extends Controller
 {
@@ -72,9 +73,7 @@ class ExcelController extends Controller
         }
   
         return Excel::download(new EstadoFacturacionExport(facturas), 'estadoFacturacion.xlsx');
-    }
-
-    
+    }    
 
     public function showAsignacionesPersonal($id, Request $request)
     {
@@ -117,5 +116,29 @@ class ExcelController extends Controller
         }
   
         return Excel::download(new AsignacionExport(asignaciones), 'asignaciones.xlsx');
+    }
+
+    public function showVigsSup(Request $request)
+    {
+        $user = $request->user();
+
+        $ODBCdriver = $this->ODBCdriver;
+        $ODBCuser = $this->ODBCuser;
+        $ODBCpwd = $this->ODBCpwd;
+
+        $query_vigs = "SELECT pers_codi, pers_lega as legajo ,pers_nomb as name FROM personal WHERE pers_supe = ' $user->supe_codi' AND EMPTY(pers_fegr)";
+
+        //CONEXION Y OBTENCION DE DATOS
+        $conID = odbc_pconnect($ODBCdriver, $ODBCuser, $ODBCpwd);
+        if (!$conID) {
+            print("No se pudo establecer la conexión!");
+            exit();
+        }
+        define('vigs', @odbc_exec($conID, $query_vigs));
+        if (vigs === false) {
+            die("Error en query: " . odbc_errormsg($conID));
+        }
+
+        return Excel::download(new ShowVigsSupExport(vigs), 'miPersonal.xlsx');
     }
 }
