@@ -20,11 +20,6 @@
 .red-buttom{
     width: 100%;
     margin: 5px;
-    background-color: #B6252A;
-}
-.red-buttom:hover{
-    background-color: #B6252A;
-    border-color: #B6252A;
 }
 
 table {

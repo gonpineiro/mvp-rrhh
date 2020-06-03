@@ -5,13 +5,20 @@
 <div class="container">
     <div class="row mt-2">
         <div class="col cl-6">
-            <br>
+        <div class="row mt-2">
+                <div class="col cl-2 box">
+                    <h3 class="table-title">Asociados reportados</h3>
+                </div>
+                <div class="col cl-2 text-derecha ">
+                    <img src="{{ asset('logos/return-button.png') }}" onclick="goBack()" class="center link">
+                </div>
+            </div>
             <table class="table table-hover" id="rrhh">
                 <thead>
                     <tr>
-                        <th scope="col">Codigo</th>
+                        <th scope="col">Código</th>
                         {{-- <th scope="col">Legajo</th> --}}
-                        <th scope="col">Nombre</th>
+                        <th scope="col">Asociado</th>
                         <th scope="col">Supervisor</th>
                         <th scope="col">Observación</th>
                         <th scope="col">Reportar</th>

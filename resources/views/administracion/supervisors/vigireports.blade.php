@@ -6,8 +6,8 @@
         <div class="col cl-6">
             <div class="row mt-2">
                 <div class="col cl-2 box">
-                    <h3 class="table-title">Reportados por mi </h3>
-                    <img src="{{ asset('logos/xlsx.png') }}" class="link">
+                    <h3 class="table-title">Mis reportados</h3>
+                    {{-- <img src="{{ asset('logos/xlsx.png') }}" class="link"> --}}
                 </div>
                 <div class="col cl-2 text-derecha ">
                     <img src="{{ asset('logos/return-button.png') }}" onclick="goBack()" class="center link">

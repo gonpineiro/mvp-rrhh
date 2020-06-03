@@ -46,7 +46,8 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                
+                {{--<div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                       <p style='margin-left: 5em'></p>
@@ -55,7 +56,6 @@
                         <li class="nav-item dropdown" >
                             <a id="navbarDropdownAmbientes" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre><span class="caret">Usuarios</span></a>
                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                {{-- <a class="dropdown-item" href="/hosts"><span>Todos</span></a> --}}
                                 @can ('users.show') <a class="dropdown-item" href="/users"><span>Usuarios generados</span></a>@endcan
                                 @can ('users.show') <a class="dropdown-item" href="/sup_users"><span>Supervisores</span></a>@endcan
                             </div>
@@ -115,7 +115,7 @@
                             </li>
                         @endguest
                     </ul>
-                </div>
+                </div>--}}
             </div>
         </nav>
 

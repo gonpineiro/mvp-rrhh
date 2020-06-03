@@ -7,7 +7,7 @@
 
             <div class="row mt-2">
                 <div class="col cl-2 box">
-                    <h3 class="table-title">Personal a cargo</h3>
+                    <h3 class="table-title">Mi personal</h3>
                     <img src="logos/xlsx.png" class="link">
                 </div>
                 <div class="col cl-2 text-derecha ">
