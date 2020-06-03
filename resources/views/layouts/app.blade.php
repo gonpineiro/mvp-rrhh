@@ -8,6 +8,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+     <!-- add icon link -->
+     <link rel = "icon" href =  
+     "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200X200.png" 
+             type = "image/x-icon"> 
 
     <!-- Scripts -->
 
