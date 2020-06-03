@@ -24,7 +24,7 @@
                     <tr>
                         <td>{{$rrhhreport['pers_codi']}}</td>
                         {{-- <td>{{$rrhhreport['pers_lega']}}</td> --}}
-                        <td>{{$rrhhreport['pers_nomb']}}</td>
+                        <td>{{utf8_encode($rrhhreport['pers_nomb'])}}</td>
                         <td>{{$rrhhreport->user->name}}</td>
                         <td>{{$rrhhreport->comentario_sup}}</td>
                         <td> <a href="/resolve_report/{{$rrhhreport->id}}/" class="confirmation"><img

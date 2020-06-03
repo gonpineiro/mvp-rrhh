@@ -28,7 +28,7 @@
                     <tr href="/only_vig/{{$vig['pers_codi']}}" class="link">
                         <td>{{$vig['pers_codi']}}</td>
                         <td>{{$vig['legajo']}}</td>
-                        <td>{{$vig['name']}}</td>
+                        <td>{{utf8_encode($vig['name'])}}</td>
                     </tr>
                     @endwhile
 

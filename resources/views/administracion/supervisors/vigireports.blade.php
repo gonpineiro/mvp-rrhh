@@ -30,7 +30,7 @@
                     <tr>
                         <td>{{$rrhhreport['pers_codi']}}</td>
                         <td>{{$rrhhreport['pers_lega']}}</td>
-                        <td>{{$rrhhreport['pers_nomb']}}</td>
+                        <td>{{utf8_encode($rrhhreport['pers_nomb'])}}</td>
                         <td>{{$rrhhreport->comentario_rrhh}}</td>
                         <td> <a href="/change_estate/{{$rrhhreport->id}}">@if ($rrhhreport->estado != 2) <img
                                     src="{{asset("logos/add-cred.png")}}" style="width: 20px;"> @endif </a> </td>

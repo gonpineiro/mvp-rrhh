@@ -21,7 +21,7 @@ class FacturacionController extends Controller
       $ODBCpwd = $this->ODBCpwd;
 
       $user = $request->user();
-
+      
       $query_fac =
        "SELECT
        objetivo.obje_nomb as cliente,
@@ -59,7 +59,7 @@ class FacturacionController extends Controller
       //CONEXION CON BBDD OBDC
       $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
       if(!$conID) { print("No se pudo establecer la conexión!");exit();}
-
+//dd($fin_periodo);
       //PUESTOS PENDIENTES A FACTURAR AGRUPADOS POR CLIENTE
       $query_fac = "SELECT
       asig_obje as id,
@@ -67,7 +67,7 @@ class FacturacionController extends Controller
       count(DISTINCT asig_pues) as total
       FROM asigvigi
       INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
-      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN {02/01/20} AND {02/29/20}
+      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN { $inicio_periodo } AND { $fin_periodo }
       GROUP BY cliente;";
 
       define ('pendientes', @odbc_exec($conID, $query_fac));

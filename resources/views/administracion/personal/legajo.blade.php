@@ -12,7 +12,9 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h5>{{$personal['name']}}</h5>
+                
+               
+                    <h5>{{utf8_encode($personal['name'])}}</h5>
                 </div>
                 <div class="card-body">
 
@@ -38,7 +40,7 @@
                                     <label for="staticEmail" class="col-sm-3 col-form-label">Nombre</label>
                                     <div class="col-sm-9">
                                         <input type="text" readonly class="form-control" id="staticEmail"
-                                            value="{{$personal['name']}}">
+                                            value="{{utf8_encode($personal['name'])}}">
                                     </div>
                                 </div>
 

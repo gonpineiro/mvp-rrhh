@@ -257,13 +257,13 @@ class SupervisorController extends Controller
     empresas.empr_nomb as empresa,
     categori.cate_nomb as categoria
     FROM personal 
-    INNER JOIN provinci ON provinci.prov_codi = personal.pers_prov
-    INNER JOIN zonas ON zonas.zona_codi = personal.pers_zona
-    INNER JOIN paises ON paises.pais_codi = personal.pers_naci
-    INNER JOIN bancos ON bancos.banc_codi = personal.pers_banc
-    INNER JOIN supervisor ON supervisor.supe_codi = personal.pers_supe
-    INNER JOIN empresas ON empresas.empr_codi = personal.pers_empr
-    INNER JOIN categori ON categori.cate_codi = personal.pers_cate
+    LEFT JOIN provinci ON provinci.prov_codi = personal.pers_prov
+    LEFT JOIN zonas ON zonas.zona_codi = personal.pers_zona
+    LEFT JOIN paises ON paises.pais_codi = personal.pers_naci
+    LEFT JOIN bancos ON bancos.banc_codi = personal.pers_banc
+    LEFT JOIN supervisor ON supervisor.supe_codi = personal.pers_supe
+    LEFT JOIN empresas ON empresas.empr_codi = personal.pers_empr
+    LEFT JOIN categori ON categori.cate_codi = personal.pers_cate
     WHERE pers_codi = $id";
     //$query_sup ="SELECT supe_codi, supe_nomb as name FROM supervisor WHERE supe_codi = '$id';";
 
@@ -275,7 +275,7 @@ class SupervisorController extends Controller
     if (personal === false) die("Error en query: " . odbc_errormsg($conID));
 
     define ('all', @odbc_exec($conID, $query_all));
-    if (personal === false) die("Error en query: " . odbc_errormsg($conID));
+    if (all === false) die("Error en query: " . odbc_errormsg($conID));
    
     $personal = odbc_fetch_array(personal);
     //dd($personal);

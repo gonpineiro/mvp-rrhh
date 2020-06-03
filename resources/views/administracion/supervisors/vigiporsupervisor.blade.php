@@ -28,7 +28,7 @@
                     <tr href="/only_vig/{{$vig['pers_codi']}}" class="link">
                         <td>{{$vig['pers_codi']}}</td>
                         <td>{{$vig['legajo']}}</td>
-                        <td>{{$vig['name']}}</td>
+                        <td>{{utf8_encode($vig['name'])}}</td>
                         <td> @if (!verificar($vigReports, $vig['pers_codi']))
                             <a href="/report_vig/{{$vig['pers_codi']}}/" class="confirmation">
                                 <img src="{{asset("logos/add-cred.png")}}" style="width: 20px;">

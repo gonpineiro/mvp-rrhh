@@ -32,7 +32,7 @@
                     <tr>
                         <td>{{$supervisor['supe_codi']}}</td>
                         {{-- <td>{{$supervisor['legajo']}}</td> --}}
-                        <td>{{$supervisor['name']}}</td>
+                        <td>{{utf8_encode($supervisor['name'])}}</td>
                         {{-- <td>{{$supervisor['empr_nomb']}}</td> --}}
                         <td class="center"> <a href="show_perso_ger/{{$supervisor['supe_codi']}}"><img
                                     src="logos/add-user.png" class="icon"></a></td>

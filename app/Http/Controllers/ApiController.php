@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
-    public function showVigs(Request $request){
-
+    public function showVigs(Request $request)
+    {
         $ODBCdriver = $this->ODBCdriver;
         $ODBCuser = $this->ODBCuser;
         $ODBCpwd = $this->ODBCpwd;
@@ -49,11 +49,16 @@ class ApiController extends Controller
         LEFT JOIN categori ON categori.cate_codi = personal.pers_cate";
     
         //CONEXION Y OBTENCION DE DATOS
-        $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);    
-        if(!$conID) { print("No se pudo establecer la conexión!");exit();}
+        $conID = odbc_pconnect($ODBCdriver, $ODBCuser, $ODBCpwd);
+        if (!$conID) {
+            print("No se pudo establecer la conexión!");
+            exit();
+        }
         
-        define ('sup', @odbc_exec($conID, $query_sup));
-        if (sup === false) die("Error en query: " . odbc_errormsg($conID));      
+        define('sup', @odbc_exec($conID, $query_sup));
+        if (sup === false) {
+            die("Error en query: " . odbc_errormsg($conID));
+        }
     
         $pers_codi = 'pers_codi';
         $pers_lega = 'pers_lega';
@@ -71,7 +76,7 @@ class ApiController extends Controller
         $pers_lugn = 'pers_lugn';
         $pers_cuil = 'pers_cuil';
         $pers_fing = 'pers_fing';
-        $pers_fegr = 'pers_fegr';        
+        $pers_fegr = 'pers_fegr';
         $pers_frei = 'pers_frei';
         $pers_fant = 'pers_fant';
         $banc_nomb = 'banc_nomb';
@@ -81,38 +86,35 @@ class ApiController extends Controller
         $empr_nomb = 'empr_nomb';
         $cate_nomb = 'cate_nomb';
 
-        while($row = odbc_fetch_array(sup)) {          
-          $data[$row['id']] = array(
-            $pers_codi => utf8_encode ($row['id']),
-            $pers_lega => utf8_encode ($row['legajo']),
-            $pers_nomb => utf8_encode ($row['name']),
-            $pers_domi => utf8_encode ($row['domicilio']),
-            $pers_loca => utf8_encode ($row['localidad']),
-            $prov_nomb => utf8_encode ($row['provincia']),
-            $pers_copo => utf8_encode ($row['cp']),
-            $zona_nomb => utf8_encode ($row['zona']),
-            $pais_nomb => utf8_encode ($row['nacionalidad']),
-            $pers_telc => utf8_encode ($row['phone_fijo']),
-            $pers_movp => utf8_encode ($row['phone_movil']),
-            $pers_ndoc => utf8_encode ($row['ndoc']),
-            $pers_fnac => utf8_encode ($row['fecha_nac']),
-            $pers_lugn => utf8_encode ($row['lugar_nac']),
-            $pers_cuil => utf8_encode ($row['cuil']),
-            $pers_fing => utf8_encode ($row['fecha_ingreso']),
-            $pers_fegr => utf8_encode ($row['fecha_egreso']),        
-            $pers_frei => utf8_encode ($row['fecha_reincidencia']),
-            $pers_fant => utf8_encode ($row['fecha_antecedentes']),
-            $banc_nomb => utf8_encode ($row['banco']),
-            $pers_cur => utf8_encode ($row['cur']),
-            $pers_obra => utf8_encode ($row['obra_social']),
-            $supe_nomb => utf8_encode ($row['name_supe']),
-            $empr_nomb => utf8_encode ($row['empresa']),
-            $cate_nomb => utf8_encode ($row['categoria'])
-          ); 
-        };     
-        return response()->json($data, 200);     
-    
+        while ($row = odbc_fetch_array(sup)) {
+            $data[$row['id']] = array(
+            $pers_codi => utf8_encode($row['id']),
+            $pers_lega => utf8_encode($row['legajo']),
+            $pers_nomb => utf8_encode($row['name']),
+            $pers_domi => utf8_encode($row['domicilio']),
+            $pers_loca => utf8_encode($row['localidad']),
+            $prov_nomb => utf8_encode($row['provincia']),
+            $pers_copo => utf8_encode($row['cp']),
+            $zona_nomb => utf8_encode($row['zona']),
+            $pais_nomb => utf8_encode($row['nacionalidad']),
+            $pers_telc => utf8_encode($row['phone_fijo']),
+            $pers_movp => utf8_encode($row['phone_movil']),
+            $pers_ndoc => utf8_encode($row['ndoc']),
+            $pers_fnac => utf8_encode($row['fecha_nac']),
+            $pers_lugn => utf8_encode($row['lugar_nac']),
+            $pers_cuil => utf8_encode($row['cuil']),
+            $pers_fing => utf8_encode($row['fecha_ingreso']),
+            $pers_fegr => utf8_encode($row['fecha_egreso']),
+            $pers_frei => utf8_encode($row['fecha_reincidencia']),
+            $pers_fant => utf8_encode($row['fecha_antecedentes']),
+            $banc_nomb => utf8_encode($row['banco']),
+            $pers_cur => utf8_encode($row['cur']),
+            $pers_obra => utf8_encode($row['obra_social']),
+            $supe_nomb => utf8_encode($row['name_supe']),
+            $empr_nomb => utf8_encode($row['empresa']),
+            $cate_nomb => utf8_encode($row['categoria'])
+          );
+        };
+        return response()->json($data, 200);
     }
-
-
 }

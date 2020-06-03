@@ -17,7 +17,7 @@ class Controller extends BaseController
       $this->ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=C:\SAB5\Database\gsm.dbc;Exclusive=No";
       $this->ODBCuser = "";
       $this->ODBCpwd = "";
-      $this->inicio_periodo = '03/01/20';
-      $this->fin_periodo = '03/31/20';
+      $this->inicio_periodo = '05/01/20';
+      $this->fin_periodo = '05/31/20';
     }
 }

@@ -28,7 +28,7 @@
                 <tbody>
                     <input type="text" name="" value="asd" hidden>
                     @while ($asignacione = odbc_fetch_array($asignaciones))
-                    <tr>
+                    <tr>)
                         <td>{{$asignacione['fecha']}}</td>
                         <td>{{$asignacione['desde']}}</td>
                         <td>{{$asignacione['hasta']}}</td>
