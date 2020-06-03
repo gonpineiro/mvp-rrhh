@@ -7,7 +7,7 @@
             <div class="row mt-2">
                 <div class="col cl-2 box">
                     <h3 class="table-title">Clientes pendientes a facturar </h3>
-                    <img src="{{ asset('logos/xlsx.png') }}" class="link">
+                    <a href="/pendiente_fac/excel"><img src="{{ asset('logos/xlsx.png') }}" class="link"></a>
                 </div>
                 <div class="col cl-2 text-derecha ">
                     <img src="{{ asset('logos/return-button.png') }}" onclick="goBack()" class="center link">
@@ -23,7 +23,8 @@
                 <tbody>
                     @while ($pendiente = odbc_fetch_array($pendientes))
                     <tr>
-                        <td><a href="pendiente_fac/{{$pendiente['id']}}">{{utf8_encode($pendiente['cliente'])}}</a></td>
+                        {{-- <td><a href="pendiente_fac/{{$pendiente['id']}}">{{utf8_encode($pendiente['cliente'])}}</a></td> --}}
+                        <td>{{utf8_encode($pendiente['cliente'])}}</td>
                         <td>{{$pendiente['total']}}</td>
                     </tr>
                     @endwhile

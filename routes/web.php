@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/estado_fac/excel', 'ExcelController@showEstadofacturacion')->middleware('can:facturacion');
 
   Route::get('/pendiente_fac', 'FacturacionController@showPendientefacturacion')->middleware('can:facturacion');
+  Route::get('/pendiente_fac/excel', 'ExcelController@showPendientefacturacion')->middleware('can:facturacion');
   Route::get('/pendiente_fac/{id}', 'FacturacionController@showPendientecliente')->middleware('can:facturacion');
 
 });

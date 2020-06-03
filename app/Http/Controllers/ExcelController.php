@@ -9,6 +9,7 @@ use App\Exports\VigsSupervisorExport;
 use App\Exports\EstadoFacturacionExport;
 use App\Exports\AsignacionExport;
 use App\Exports\ShowVigsSupExport;
+use App\Exports\PendienteFacturacionExport;
 
 class ExcelController extends Controller
 {
@@ -140,5 +141,35 @@ class ExcelController extends Controller
         }
 
         return Excel::download(new ShowVigsSupExport(vigs), 'miPersonal.xlsx');
+    }
+
+    public function showPendientefacturacion(Request $request){
+
+      $ODBCdriver = $this->ODBCdriver;
+      $ODBCuser = $this->ODBCuser;
+      $ODBCpwd = $this->ODBCpwd;
+      $inicio_periodo = $this->inicio_periodo;
+      $fin_periodo = $this->fin_periodo;
+
+      $user = $request->user();
+
+      //CONEXION CON BBDD OBDC
+      $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
+      if(!$conID) { print("No se pudo establecer la conexión!");exit();}
+
+      //PUESTOS PENDIENTES A FACTURAR AGRUPADOS POR CLIENTE
+      $query_fac = "SELECT
+      asig_obje as id,
+      objetivo.obje_nomb as cliente,
+      count(DISTINCT asig_pues) as total
+      FROM asigvigi
+      LEFT JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
+      WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN { $inicio_periodo } AND { $fin_periodo }
+      GROUP BY cliente;";
+
+      define ('pendientes', @odbc_exec($conID, $query_fac));
+      if (pendientes === false) die("Error en query: " . odbc_errormsg($conID));
+
+      return Excel::download(new PendienteFacturacionExport(pendientes), 'miPersonal.xlsx');
     }
 }
