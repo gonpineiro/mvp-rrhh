@@ -5,6 +5,7 @@
 .transparent {
     background-color: transparent;
 }
+
 .text-derecha {
     text-align: right;
     justify-content: right;
@@ -13,11 +14,12 @@
 .icon {
     width: 24px;
 }
+
 .center {
     text-align: center;
 }
 
-.red-buttom{
+.red-buttom {
     width: 100%;
     margin: 5px;
 }

@@ -31,8 +31,8 @@ class FacturacionController extends Controller
        fact_prof as proforma,
        fact_time as tiempo
        FROM factvigi
-       INNER JOIN empresas ON empresas.empr_codi = factvigi.fact_empr
-       INNER JOIN objetivo ON objetivo.obje_codi = factvigi.fact_obje
+       LEFT JOIN empresas ON empresas.empr_codi = factvigi.fact_empr
+       LEFT JOIN objetivo ON objetivo.obje_codi = factvigi.fact_obje
        WHERE fact_tango = 0
        GROUP BY proforma;";
 
@@ -59,14 +59,14 @@ class FacturacionController extends Controller
       //CONEXION CON BBDD OBDC
       $conID = odbc_pconnect($ODBCdriver,$ODBCuser,$ODBCpwd);
       if(!$conID) { print("No se pudo establecer la conexión!");exit();}
-//dd($fin_periodo);
+
       //PUESTOS PENDIENTES A FACTURAR AGRUPADOS POR CLIENTE
       $query_fac = "SELECT
       asig_obje as id,
       objetivo.obje_nomb as cliente,
       count(DISTINCT asig_pues) as total
       FROM asigvigi
-      INNER JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
+      LEFT JOIN objetivo ON objetivo.obje_codi = asigvigi.asig_obje
       WHERE asig_esta < 3 AND EMPTY (asig_fact) AND asig_fech BETWEEN { $inicio_periodo } AND { $fin_periodo }
       GROUP BY cliente;";
 
