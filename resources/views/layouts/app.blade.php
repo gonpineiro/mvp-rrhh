@@ -9,9 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
      <!-- add icon link -->
-     <link rel = "icon" href =  
-     "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200X200.png" 
-             type = "image/x-icon"> 
+     <link rel = "icon" href ="{{ asset('favicon.ico') }}" type = "image/x-icon"> 
 
     <!-- Scripts -->
 
