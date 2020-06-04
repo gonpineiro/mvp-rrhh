@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-      DB::table('users')->insert([
+/*       DB::table('users')->insert([
         'name' => 'administrador',
         'email' => 'administrador@sab5.com.ar',
         'password' => Hash::make('admin')]);    
@@ -60,12 +60,12 @@ class DatabaseSeeder extends Seeder
       DB::table('permission_role')->insert(['permission_id'  => 7  ,'role_id'  => 4]);
 
       DB::table('permission_role')->insert(['permission_id'  => 8  ,'role_id'  => 5]);
+ */
 
-
-/*       $this->call(UsersSeeder::class);
+      $this->call(UsersSeeder::class);
       $this->call(RolesSeeder::class);
       $this->call(PermissionsSeeder::class);
-      $this->call(PermissionRoleSeeder::class); */
+      $this->call(PermissionRoleSeeder::class); 
 
     }
 }

@@ -170,6 +170,6 @@ class ExcelController extends Controller
       define ('pendientes', @odbc_exec($conID, $query_fac));
       if (pendientes === false) die("Error en query: " . odbc_errormsg($conID));
 
-      return Excel::download(new PendienteFacturacionExport(pendientes), 'miPersonal.xlsx');
+      return Excel::download(new PendienteFacturacionExport(pendientes), 'pendienteProforma.xlsx');
     }
 }

@@ -12,10 +12,11 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
-      //ROLEs
-      Role::create(['name'  => 'Admin','slug'  => 'admin','special'  => 'all-access']);  //ADMIN ROLL
+      //ADMIN ROLL
+      Role::create(['name'  => 'Admin','slug'  => 'admin','special'  => 'all-access']);  
       DB::table('role_user')->insert(['role_id' => '1','user_id' => 1]);
-      
+
+      //USERS ROLS
       DB::table('roles')->insert(['name'  => 'Supervisor operaciones'  ,'slug'  => 'supervisor'   ,'description'  => 'Supervisores operaciones']);
       DB::table('roles')->insert(['name'  => 'Gerente de cuenta'  ,'slug'  => 'gerente.cuente'   ,'description'  => 'Gerente de cuenta']);
       DB::table('roles')->insert(['name'  => 'RRHH'  ,'slug'  => 'rrhh'   ,'description'  => 'RRHH']);

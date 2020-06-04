@@ -7,11 +7,11 @@
          <a href="/asd" type="button"style="width: 100%;margin: 5px;background-color: #B6252A;" class="btn btn-primary btn-lg">Botón grande</a> --}}
        
          @can ('facturacion')
-         <a href="/estado_fac" type="button" class="btn btn-danger btn-lg red-buttom">Clientes proformados sin N° de factura</a>
+         <a href="/estado_fac" type="button" class="btn btn-danger btn-lg red-buttom">Proformas no facturadas</a>
        @endcan
 
        @can ('facturacion')
-         <a href="/pendiente_fac" type="button" class="btn btn-danger btn-lg red-buttom">Clientes no proformados</a>
+         <a href="/pendiente_fac" type="button" class="btn btn-danger btn-lg red-buttom">Pendiente de proforma</a>
        @endcan
 
         @can ('rrhh')
