@@ -6,7 +6,7 @@
         <div class="col cl-6">
             <div class="row mt-2">
                 <div class="col cl-2 box">
-                    <h3 class="table-title">Clientes pendientes a facturar </h3>
+                    <h3 class="table-title">Clientes pendientes a proformar </h3>
                     <a href="/pendiente_fac/excel"><img src="{{ asset('logos/xlsx.png') }}" class="link"></a>
                 </div>
                 <div class="col cl-2 text-derecha ">

@@ -27,7 +27,7 @@ class FacturacionController extends Controller
        objetivo.obje_nomb as cliente,
        empresas.empr_nomb as empresa,
        fact_dfec as fecha,
-       sum(fact_can1) as cantidad_uno,
+       sum(fact_can6) as cantidad_uno,
        fact_prof as proforma,
        fact_time as tiempo
        FROM factvigi

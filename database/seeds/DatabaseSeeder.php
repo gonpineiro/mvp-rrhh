@@ -62,10 +62,10 @@ class DatabaseSeeder extends Seeder
       DB::table('permission_role')->insert(['permission_id'  => 8  ,'role_id'  => 5]);
 
 
-      $this->call(UsersSeeder::class);
+      /* $this->call(UsersSeeder::class);
       $this->call(RolesSeeder::class);
       $this->call(PermissionsSeeder::class);
-      $this->call(PermissionRoleSeeder::class); 
+      $this->call(PermissionRoleSeeder::class);  */
 
     }
 }
