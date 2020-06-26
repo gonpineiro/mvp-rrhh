@@ -14,10 +14,10 @@ class Controller extends BaseController
     public $ODBCdriver, $ODBCuser, $ODBCpwd, $inicio_periodo, $fin_periodo;
 
     public function __construct(){
-      $this->ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=Y:\gs2m.dbc;Exclusive=No";
+      $this->ODBCdriver = "Driver={Microsoft Visual FoxPro Driver};SourceType=DBC;SourceDB=Y:\gsm.dbc;Exclusive=No";
       $this->ODBCuser = "";
       $this->ODBCpwd = "";
-      $this->inicio_periodo = '05/01/20';
-      $this->fin_periodo = '05/31/20';
+      $this->inicio_periodo = '06/01/20';
+      $this->fin_periodo = '06/30/20';
     }
 }
